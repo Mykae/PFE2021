@@ -28,12 +28,12 @@ public class ChateauDeSable : MonoBehaviour
 
     IEnumerator destructionChateau()
     {
-        yield return new WaitForSeconds(tiersTempsDestruction);
+        /*yield return new WaitForSeconds(tiersTempsDestruction);
         castleColor.color = Color.red;
         yield return new WaitForSeconds(tiersTempsDestruction);
-        castleColor.color = Color.black;
+        castleColor.color = Color.black;*/
         yield return new WaitForSeconds(tiersTempsDestruction);
-        UIQuetes.AvancerQuete(1, false);
-        Destroy(gameObject);
+        //UIQuetes.AvancerQuete(1, false);
+        //Destroy(gameObject);
     }
 }
