@@ -22,11 +22,12 @@ public class GestionUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-            AvancerQuete(1);
+
     }
 
-    public void AvancerQuete(int indiceQuete)
+    //indiceQuete pour la quête 1 2 ou 3 du personnage
+    //addition == true -> addition, la quête avance. si false la quête recule (eg. destruction de château)
+    public void AvancerQuete(int indiceQuete, bool addition)
     {
         queteEnCours = tableauDeQuetes.transform.GetChild(indiceQuete).gameObject;
 
@@ -40,8 +41,12 @@ public class GestionUI : MonoBehaviour
         //Quetes -> Avancement (child 1) -> Total (child 1)
         var total = queteEnCours.transform.GetChild(1).transform.GetChild(1).GetComponent<Text>();
 
+        int increment;
         //On converti le texte de valeurActuelle en int pour l'incrémenter puis on le remet à sa place
-        int increment = System.Convert.ToInt32(valeurActuelle.text) + 1;
+        if (addition)
+            increment = System.Convert.ToInt32(valeurActuelle.text) + 1;
+        else
+            increment = System.Convert.ToInt32(valeurActuelle.text) - 1;
         valeurActuelle.text = "" + increment;
 
         //Si on a atteint l'objectif on désactive l'avancement et active l'interface de quête réussie
