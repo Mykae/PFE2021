@@ -23,6 +23,8 @@ public class TimmyBehavior : MonoBehaviour
     public Text actionText;
 
 
+    private GameObject LastEncounteredPlayer;
+
     void Update()
     {
         MovementInput();
@@ -82,7 +84,12 @@ public class TimmyBehavior : MonoBehaviour
         if (playerTriggerBox)
         {
             GetComponent<TimmyBehavior>().enabled = false;
-            transform.Find("Main Camera").gameObject.SetActive(false);
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            transform.Find("Main Camera").SetParent(LastEncounteredPlayer.transform);
+            LastEncounteredPlayer.transform.Find("Main Camera").transform.localPosition = new Vector3(0, 0, -10);
+            LastEncounteredPlayer.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+            LastEncounteredPlayer.GetComponent<TimmyBehavior>().enabled = true;
+
         }
     }
 
@@ -108,6 +115,7 @@ public class TimmyBehavior : MonoBehaviour
         if (collision.tag == "Player" && collision.name != name)
         {
             playerTriggerBox = true;
+            LastEncounteredPlayer = collision.gameObject;
         }
         if (collision.tag == "Peche")
         {
@@ -117,7 +125,6 @@ public class TimmyBehavior : MonoBehaviour
         {
             chateauTriggerBox = true;
         }
-
     }
 
     private void OnTriggerExit2D(Collider2D collision)
