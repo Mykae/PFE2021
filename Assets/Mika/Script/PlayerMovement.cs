@@ -4,9 +4,17 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed;
+    private float currentSpeed;
+    public float walkSpeed;
+    public float runSpeed;
     public Rigidbody2D rb;
+    private bool shift;
     Vector2 movement;
+
+    private void Start()
+    {
+        shift = false;
+    }
 
     void Update()
     {
@@ -15,14 +23,24 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.velocity = movement * moveSpeed;
+        if(shift == true)
+        {
+            currentSpeed = runSpeed;
+        }
+        else if(shift == false)
+        {
+            currentSpeed = walkSpeed;
+        }
+        rb.velocity = movement * currentSpeed;
     }
 
     void MovementInput()
     {
         float mx = Input.GetAxisRaw("Horizontal");
         float my = Input.GetAxisRaw("Vertical");
+        shift = Input.GetKey(KeyCode.LeftShift);
 
         movement = new Vector2(mx, my).normalized;
+
     }
 }
