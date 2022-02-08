@@ -7,6 +7,7 @@ TagManager:
   - Canvas
   - Peche
   - Chateau
+  - PNJ
   layers:
   - Default
   - TransparentFX
