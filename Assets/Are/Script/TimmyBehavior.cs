@@ -33,8 +33,10 @@ public class TimmyBehavior : MonoBehaviour
     void Update()
     {
         //Interdiction de bouger si le joueur est en train de parler avec quelqu'un
-        if(!isPlayerTalking)
+        if (!isPlayerTalking)
             MovementInput();
+        else
+            movement = -new Vector2(0, 0);
 
         UpdateTextActionButton();
 
