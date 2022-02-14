@@ -19,6 +19,11 @@ public class TimmyBehavior : MonoBehaviour
     bool playerTriggerBox = false;
     bool pecheTriggerBox = false;
     bool chateauTriggerBox = false;
+    bool pnjTriggerBox = false;
+
+    string dernierPnjRecontré;
+    public GameObject boiteDeDialogue;
+    bool isPlayerTalking = false;
 
     public Text actionText;
 
@@ -27,7 +32,12 @@ public class TimmyBehavior : MonoBehaviour
 
     void Update()
     {
-        MovementInput();
+        //Interdiction de bouger si le joueur est en train de parler avec quelqu'un
+        if (!isPlayerTalking)
+            MovementInput();
+        else
+            movement = -new Vector2(0, 0);
+
         UpdateTextActionButton();
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -89,7 +99,19 @@ public class TimmyBehavior : MonoBehaviour
             LastEncounteredPlayer.transform.Find("Main Camera").transform.localPosition = new Vector3(0, 0, -10);
             LastEncounteredPlayer.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
             LastEncounteredPlayer.GetComponent<TimmyBehavior>().enabled = true;
-
+        }
+        if (pnjTriggerBox)
+        {
+            if (isPlayerTalking)
+            {
+                boiteDeDialogue.SetActive(false);
+                isPlayerTalking = false;
+            }
+            else
+            {
+                Parler(dernierPnjRecontré);
+            }
+            
         }
     }
 
@@ -107,7 +129,11 @@ public class TimmyBehavior : MonoBehaviour
         {
             actionText.text = "Changer de perso";
         }
-        
+        if (pnjTriggerBox)
+        {
+            actionText.text = "Parler";
+        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -124,6 +150,11 @@ public class TimmyBehavior : MonoBehaviour
         if (collision.tag == "Chateau")
         {
             chateauTriggerBox = true;
+        }
+        if (collision.tag == "PNJ")
+        {
+            pnjTriggerBox = true;
+            dernierPnjRecontré = collision.name;
         }
     }
 
@@ -144,7 +175,32 @@ public class TimmyBehavior : MonoBehaviour
             chateauTriggerBox = false;
             actionText.text = "Rien pour le moment";
         }
-        
+        if (collision.tag == "PNJ")
+        {
+            pnjTriggerBox = false;
+            actionText.text = "Rien pour le moment";
+        }
+
+    }
+
+    void Parler(string nomPNJ)
+    {
+        isPlayerTalking = true;
+        boiteDeDialogue.SetActive(true);
+        switch (nomPNJ)
+        {
+            case "PNJ1":
+                boiteDeDialogue.GetComponentInChildren<Text>().text = "Salut mon ami, tu vas bien ? Pourrais-tu aller me cherche 3 poissons ?";
+                break;
+            case "PNJ2":
+                boiteDeDialogue.GetComponentInChildren<Text>().text = "Hé toi ! Aboule flouze !";
+                break;
+            case "PNJ3":
+                boiteDeDialogue.GetComponentInChildren<Text>().text = "Moi j'aime trop les châteaux de sables <3";
+                break;
+            default:
+                break;
+        }
     }
 
     void PlacerChateauDeSable()
