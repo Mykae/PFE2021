@@ -5,15 +5,12 @@ using UnityEngine.UI;
 
 public class TimmyBehavior : MonoBehaviour
 {
-    public float moveSpeed;
-    public Rigidbody2D rb;
-    Vector2 movement;
 
-    enum Direction { North, East, South, West };
-    Direction playerDirection;
 
     [SerializeField]
     Transform castlePrefab;
+
+    public PlayerMovement movement;
 
     //Différents types de trigger box
     bool playerTriggerBox = false;
@@ -23,7 +20,6 @@ public class TimmyBehavior : MonoBehaviour
 
     string dernierPnjRecontré;
     public GameObject boiteDeDialogue;
-    bool isPlayerTalking = false;
 
     public Text actionText;
 
@@ -32,12 +28,7 @@ public class TimmyBehavior : MonoBehaviour
 
     void Update()
     {
-        //Interdiction de bouger si le joueur est en train de parler avec quelqu'un
-        if (!isPlayerTalking)
-            MovementInput();
-        else
-            movement = -new Vector2(0, 0);
-
+        movement = GetComponent<PlayerMovement>();
         UpdateTextActionButton();
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -45,41 +36,6 @@ public class TimmyBehavior : MonoBehaviour
 
     }
 
-    private void FixedUpdate()
-    {
-        rb.velocity = movement * moveSpeed;
-    }
-
-    void MovementInput()
-    {
-        float mx = Input.GetAxisRaw("Horizontal");
-        float my = Input.GetAxisRaw("Vertical");
-
-        movement = new Vector2(mx, my).normalized;
-
-        facingDirection(mx, my);
-    }
-
-    void facingDirection (float mx, float my)
-    {
-        if (mx > 0)
-        {
-            playerDirection = Direction.East;
-            //gameObject.GetComponent<SpriteRenderer>().sprite = PlayerSprites[0]; -> faudra faire quelque chose du style pour avoir les bonnes sprites
-        }
-        if (mx < 0)
-        {
-            playerDirection = Direction.West;
-        }
-        if (my > 0)
-        {
-            playerDirection = Direction.North;
-        }
-        if (my < 0)
-        {
-            playerDirection = Direction.South;
-        }
-    }
 
     private void ActionButton()
     {
@@ -94,22 +50,25 @@ public class TimmyBehavior : MonoBehaviour
         if (playerTriggerBox)
         {
             GetComponent<TimmyBehavior>().enabled = false;
+            movement.enabled = false;
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
             transform.Find("Main Camera").SetParent(LastEncounteredPlayer.transform);
             LastEncounteredPlayer.transform.Find("Main Camera").transform.localPosition = new Vector3(0, 0, -10);
             LastEncounteredPlayer.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
             LastEncounteredPlayer.GetComponent<TimmyBehavior>().enabled = true;
+            LastEncounteredPlayer.GetComponent<PlayerMovement>().enabled = true;
+
         }
         if (pnjTriggerBox)
         {
-            if (isPlayerTalking)
+            if (movement.enabled)
             {
-                boiteDeDialogue.SetActive(false);
-                isPlayerTalking = false;
+                Parler(dernierPnjRecontré);
             }
             else
             {
-                Parler(dernierPnjRecontré);
+                boiteDeDialogue.SetActive(false);
+                movement.enabled = true;
             }
             
         }
@@ -185,7 +144,7 @@ public class TimmyBehavior : MonoBehaviour
 
     void Parler(string nomPNJ)
     {
-        isPlayerTalking = true;
+        movement.enabled = false;
         boiteDeDialogue.SetActive(true);
         switch (nomPNJ)
         {
@@ -205,19 +164,7 @@ public class TimmyBehavior : MonoBehaviour
 
     void PlacerChateauDeSable()
     {
-        var _castlePlacement = new Vector3(1, 0, 0) + transform.position;
-        if (playerDirection == Direction.West)
-        {
-            _castlePlacement = new Vector3(-1, 0, 0) + transform.position;
-        }
-        else if (playerDirection == Direction.South)
-        {
-            _castlePlacement = new Vector3(0, -1, 0) + transform.position;
-        }
-        else if (playerDirection == Direction.North)
-        {
-            _castlePlacement = new Vector3(0, 1, 0) + transform.position;
-        }
+        var _castlePlacement = transform.position + Vector3.down;
 
         var _castle = Instantiate(castlePrefab, _castlePlacement, Quaternion.identity);
     }

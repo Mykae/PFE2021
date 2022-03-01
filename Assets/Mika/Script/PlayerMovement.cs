@@ -6,17 +6,22 @@ using UnityEngine.Tilemaps;
 public class PlayerMovement : MonoBehaviour
 {
     private float currentSpeed;
-    public float walkSpeed;
-    public float runSpeed;
-    public Rigidbody2D rb;
+    public float walkSpeed = 5;
+    public float runSpeed = 7.5f;
+    private Rigidbody2D rb;
     private bool shift;
-    public int height;
+    public int height = 5;
     Vector2 movement;
     public TilemapCollider2D Layer0;
     public TilemapCollider2D Layer1;
 
+
+    enum Direction { North, East, South, West };
+    Direction playerDirection;
+
     private void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         shift = false;
     }
 
@@ -46,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
         shift = Input.GetKey(KeyCode.LeftShift);
 
         movement = new Vector2(mx, my).normalized;
+        facingDirection(mx, my);
     }
     
     void CheckHeight()
@@ -59,6 +65,27 @@ public class PlayerMovement : MonoBehaviour
         {
             Layer1.gameObject.SetActive(true);
             Layer0.gameObject.SetActive(false);
+        }
+    }
+
+    void facingDirection(float mx, float my)
+    {
+        if (mx > 0)
+        {
+            playerDirection = Direction.East;
+            //gameObject.GetComponent<SpriteRenderer>().sprite = PlayerSprites[0]; -> faudra faire quelque chose du style pour avoir les bonnes sprites
+        }
+        if (mx < 0)
+        {
+            playerDirection = Direction.West;
+        }
+        if (my > 0)
+        {
+            playerDirection = Direction.North;
+        }
+        if (my < 0)
+        {
+            playerDirection = Direction.South;
         }
     }
 
