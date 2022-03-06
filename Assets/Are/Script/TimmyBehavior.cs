@@ -26,13 +26,38 @@ public class TimmyBehavior : MonoBehaviour
 
     private GameObject LastEncounteredPlayer;
 
-    void Update()
+    private void OnEnable()
     {
         movement = GetComponent<PlayerMovement>();
+    }
+
+    //Ce qu'il faut faire pour changer de joueur
+    private void OnDisable()
+    {
+        if (LastEncounteredPlayer != null)
+        {
+            movement.enabled = false;
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            transform.Find("Main Camera").SetParent(LastEncounteredPlayer.transform);
+            LastEncounteredPlayer.transform.Find("Main Camera").transform.localPosition = new Vector3(0, 0, -10);
+            LastEncounteredPlayer.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+            LastEncounteredPlayer.GetComponent<TimmyBehavior>().enabled = true;
+            LastEncounteredPlayer.GetComponent<PlayerMovement>().enabled = true;
+        }
+    }
+
+    void Update()
+    {
         UpdateTextActionButton();
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        
+        if (Input.GetKeyDown(KeyCode.Space) && movement.enabled)
             ActionButton();
+        //si le mouvement est désactivé et que la boite de dialogue est active c'est qu'on est en train de parler.
+        else if(movement.enabled == false && boiteDeDialogue.activeSelf && Input.GetKeyDown(KeyCode.Space))
+        {
+            Parler(dernierPnjRecontré);
+        }
 
     }
 
@@ -50,28 +75,10 @@ public class TimmyBehavior : MonoBehaviour
         if (playerTriggerBox)
         {
             GetComponent<TimmyBehavior>().enabled = false;
-            movement.enabled = false;
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-            transform.Find("Main Camera").SetParent(LastEncounteredPlayer.transform);
-            LastEncounteredPlayer.transform.Find("Main Camera").transform.localPosition = new Vector3(0, 0, -10);
-            LastEncounteredPlayer.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-            LastEncounteredPlayer.GetComponent<TimmyBehavior>().enabled = true;
-            LastEncounteredPlayer.GetComponent<PlayerMovement>().enabled = true;
-
-        }
-        if (pnjTriggerBox)
-        {
-            if (movement.enabled)
-            {
-                Parler(dernierPnjRecontré);
-            }
-            else
-            {
-                boiteDeDialogue.SetActive(false);
-                movement.enabled = true;
-            }
             
         }
+        if (pnjTriggerBox)
+            Parler(dernierPnjRecontré);
     }
 
     private void UpdateTextActionButton()
@@ -95,7 +102,7 @@ public class TimmyBehavior : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag == "Player" && collision.name != name)
         {
@@ -116,6 +123,7 @@ public class TimmyBehavior : MonoBehaviour
             dernierPnjRecontré = collision.name;
         }
     }
+
 
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -144,21 +152,22 @@ public class TimmyBehavior : MonoBehaviour
 
     void Parler(string nomPNJ)
     {
-        movement.enabled = false;
-        boiteDeDialogue.SetActive(true);
-        switch (nomPNJ)
+        var dialogues = GameObject.Find(nomPNJ).GetComponent<Dialogues>();
+
+        if(dialogues.index == -1)
         {
-            case "PNJ1":
-                boiteDeDialogue.GetComponentInChildren<Text>().text = "Salut mon ami, tu vas bien ? Pourrais-tu aller me cherche 3 poissons ?";
-                break;
-            case "PNJ2":
-                boiteDeDialogue.GetComponentInChildren<Text>().text = "Hé toi ! Aboule flouze !";
-                break;
-            case "PNJ3":
-                boiteDeDialogue.GetComponentInChildren<Text>().text = "Moi j'aime trop les châteaux de sables <3";
-                break;
-            default:
-                break;
+            movement.enabled = false;
+            boiteDeDialogue.SetActive(true);
+        }
+        if(dialogues.DialogueSuivant())
+        {
+            boiteDeDialogue.GetComponentInChildren<Text>().text = dialogues.dialogues[dialogues.index];
+        }
+        else
+        {
+            boiteDeDialogue.SetActive(false);
+            movement.enabled = true;
+            dialogues.index = -1;
         }
     }
 

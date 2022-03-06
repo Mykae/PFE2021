@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 136128049}
   - component: {fileID: 136128048}
   - component: {fileID: 136128047}
+  - component: {fileID: 136128052}
   m_Layer: 0
   m_Name: PNJ1
   m_TagString: PNJ
@@ -281,6 +282,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &136128052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136128046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d2efc7e6bb7da64689f98fa01581f40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogues:
+  - Hey hey hey !
+  - Moi c'est marco, j'aime les haricots !
+  - hahahaha !
+  index: -1
 --- !u!1 &142294341
 GameObject:
   m_ObjectHideFlags: 0
@@ -1369,6 +1387,7 @@ GameObject:
   - component: {fileID: 395576236}
   - component: {fileID: 395576235}
   - component: {fileID: 395576234}
+  - component: {fileID: 395576239}
   m_Layer: 0
   m_Name: PNJ3
   m_TagString: PNJ
@@ -1514,6 +1533,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &395576239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395576233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d2efc7e6bb7da64689f98fa01581f40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogues:
+  - Il parait que si tu parles 312 fois au gars juste au dessus il dit un secret
+    !
+  index: -1
 --- !u!1 &449505607
 GameObject:
   m_ObjectHideFlags: 0
@@ -2080,6 +2115,81 @@ RectTransform:
   m_AnchoredPosition: {x: -34.7, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &662016626
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 662016627}
+  - component: {fileID: 662016629}
+  - component: {fileID: 662016628}
+  m_Layer: 5
+  m_Name: Inventaire
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &662016627
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662016626}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1639729880}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 990, y: -365}
+  m_SizeDelta: {x: 162.15, y: 175.72}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &662016628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662016626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.6603774, g: 0.41650233, b: 0.2834639, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &662016629
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662016626}
+  m_CullTransparentMesh: 1
 --- !u!1 &710541603
 GameObject:
   m_ObjectHideFlags: 0
@@ -2406,7 +2516,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &892923729
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3254,7 +3364,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -78.752, y: 54}
+  m_AnchoredPosition: {x: -7, y: 54}
   m_SizeDelta: {x: 1059.6, y: 72.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1084558094
@@ -88452,6 +88562,68 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1598056764}
   m_CullTransparentMesh: 1
+--- !u!1 &1614076467
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1614076469}
+  - component: {fileID: 1614076468}
+  m_Layer: 0
+  m_Name: Inventaire
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1614076468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1614076467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c14d84a141e18541b4c87151b9609e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slots:
+  - item: {fileID: 0}
+    quantity: 0
+    maxQuantity: 0
+  - item: {fileID: 0}
+    quantity: 0
+    maxQuantity: 0
+  - item: {fileID: 0}
+    quantity: 0
+    maxQuantity: 0
+  - item: {fileID: 0}
+    quantity: 0
+    maxQuantity: 0
+  - item: {fileID: 0}
+    quantity: 0
+    maxQuantity: 0
+  - item: {fileID: 0}
+    quantity: 0
+    maxQuantity: 0
+--- !u!4 &1614076469
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1614076467}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.9226432, y: 0.5776659, z: -9.979045}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 18
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1631393322
 GameObject:
   m_ObjectHideFlags: 0
@@ -88465,6 +88637,7 @@ GameObject:
   - component: {fileID: 1631393325}
   - component: {fileID: 1631393324}
   - component: {fileID: 1631393323}
+  - component: {fileID: 1631393328}
   m_Layer: 0
   m_Name: PNJ2
   m_TagString: PNJ
@@ -88610,6 +88783,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1631393328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1631393322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d2efc7e6bb7da64689f98fa01581f40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogues:
+  - "Avez-vous d\xE9j\xE0 vu...?"
+  index: -1
 --- !u!1 &1631608973
 GameObject:
   m_ObjectHideFlags: 0
@@ -88766,6 +88954,7 @@ RectTransform:
   - {fileID: 892923729}
   - {fileID: 1084558093}
   - {fileID: 1693757406}
+  - {fileID: 662016627}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -88964,7 +89153,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -151, y: 54}
+  m_AnchoredPosition: {x: -142, y: 128}
   m_SizeDelta: {x: 234.3, y: 54.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1693757407
