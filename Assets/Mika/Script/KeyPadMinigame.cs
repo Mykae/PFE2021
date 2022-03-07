@@ -12,9 +12,11 @@ public class KeyPadMinigame : MonoBehaviour
     public float codeResetTime = 0.5f;
 
     private bool isResetting = false;
+    public bool isCleared = false;
 
     private void OnEnable()
     {
+        isCleared = false;
         string code = string.Empty;
 
         for (int i = 0; i < longueurCode; i++)
@@ -34,6 +36,7 @@ public class KeyPadMinigame : MonoBehaviour
         if(inputCode.text == cardCode.text)
         {
             inputCode.text = "Correct";
+            isCleared = true;
             StartCoroutine(ResetCode());
         }
         else if (inputCode.text.Length >= longueurCode)
@@ -46,9 +49,17 @@ public class KeyPadMinigame : MonoBehaviour
     private IEnumerator ResetCode()
     {
         isResetting = true;
-        yield return new WaitForSeconds(codeResetTime);
+        float pauseEndTime = Time.realtimeSinceStartup + 1;
+        while (Time.realtimeSinceStartup < pauseEndTime)
+        {
+            yield return 0;
+        }
+        if(isCleared == true)
+        {
+            Time.timeScale = 1;
+            this.gameObject.SetActive(false);
+        }
         inputCode.text = string.Empty;
         isResetting = false;
     }
-
 }
