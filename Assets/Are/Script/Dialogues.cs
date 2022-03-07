@@ -25,7 +25,6 @@ public class Dialogues : MonoBehaviour
         if(index +1 < dialogues.Length)
         {
             index++;
-            Debug.Log(index);
             return true;
         }
         return false;

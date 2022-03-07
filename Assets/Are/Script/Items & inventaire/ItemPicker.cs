@@ -9,11 +9,10 @@ public class ItemPicker : MonoBehaviour
 
     public event Action OnInventoryChange;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag == "Pickable")
+        if (other.tag == "Collectible")
         {
-            
             var item = other.GetComponent<PickableItem>().item;
             var itemAjoute = false;
 
