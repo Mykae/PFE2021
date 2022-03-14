@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TimmyBehavior : MonoBehaviour
+public class PlayerBehavior : MonoBehaviour
 {
 
 
     [SerializeField]
-    Transform castlePrefab;
+    private Transform castlePrefab;
 
     public PlayerMovement movement;
+    public Text actionText;
+    public string selectionMonologue = "TEXTE_DE_DEPART";
+    private bool showMonologue = true;
 
     //Différents types de trigger box
     bool playerTriggerBox = false;
@@ -18,17 +21,19 @@ public class TimmyBehavior : MonoBehaviour
     bool chateauTriggerBox = false;
     bool pnjTriggerBox = false;
 
-    string dernierPnjRecontré;
-    public GameObject boiteDeDialogue;
-
-    public Text actionText;
-
+    private string lastEncounteredPNJ;
+    public GameObject messageBox;
+    public Text dialogNameBox;
 
     private GameObject LastEncounteredPlayer;
 
     private void OnEnable()
     {
         movement = GetComponent<PlayerMovement>();
+        dialogNameBox.text = name;
+        messageBox.SetActive(true);
+        messageBox.GetComponentInChildren<Text>().text = selectionMonologue;
+        Invoke("SelectionMonologueTimer", 10);
     }
 
     //Ce qu'il faut faire pour changer de joueur
@@ -41,22 +46,32 @@ public class TimmyBehavior : MonoBehaviour
             transform.Find("Main Camera").SetParent(LastEncounteredPlayer.transform);
             LastEncounteredPlayer.transform.Find("Main Camera").transform.localPosition = new Vector3(0, 0, -10);
             LastEncounteredPlayer.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-            LastEncounteredPlayer.GetComponent<TimmyBehavior>().enabled = true;
+            LastEncounteredPlayer.GetComponent<PlayerBehavior>().enabled = true;
             LastEncounteredPlayer.GetComponent<PlayerMovement>().enabled = true;
         }
     }
 
     void Update()
     {
+        if (showMonologue)
+        {
+            if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))){
+                //movement.enabled = true;
+                messageBox.SetActive(false);
+                showMonologue = false;
+            }
+            return;
+        }
+
         UpdateTextActionButton();
 
         
-        if (Input.GetKeyDown(KeyCode.Space) && movement.enabled)
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) && movement.enabled)
             ActionButton();
         //si le mouvement est désactivé et que la boite de dialogue est active c'est qu'on est en train de parler.
-        else if(movement.enabled == false && boiteDeDialogue.activeSelf && Input.GetKeyDown(KeyCode.Space))
+        else if(movement.enabled == false && messageBox.activeSelf && (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)))
         {
-            Parler(dernierPnjRecontré);
+            Parler(lastEncounteredPNJ);
         }
 
     }
@@ -74,11 +89,11 @@ public class TimmyBehavior : MonoBehaviour
         }
         if (playerTriggerBox)
         {
-            GetComponent<TimmyBehavior>().enabled = false;
+            GetComponent<PlayerBehavior>().enabled = false;
             
         }
         if (pnjTriggerBox)
-            Parler(dernierPnjRecontré);
+            Parler(lastEncounteredPNJ);
     }
 
     private void UpdateTextActionButton()
@@ -87,15 +102,15 @@ public class TimmyBehavior : MonoBehaviour
         {
             actionText.text = "Pêcher";
         }
-        if (chateauTriggerBox)
+        else if (chateauTriggerBox)
         {
             actionText.text = "Construire";
         }
-        if (playerTriggerBox)
+        else if (playerTriggerBox)
         {
             actionText.text = "Changer de perso";
         }
-        if (pnjTriggerBox)
+        else if (pnjTriggerBox)
         {
             actionText.text = "Parler";
         }
@@ -120,7 +135,7 @@ public class TimmyBehavior : MonoBehaviour
         if (collision.tag == "PNJ")
         {
             pnjTriggerBox = true;
-            dernierPnjRecontré = collision.name;
+            lastEncounteredPNJ = collision.name;
         }
     }
 
@@ -152,20 +167,30 @@ public class TimmyBehavior : MonoBehaviour
 
     void Parler(string nomPNJ)
     {
-        var dialogues = GameObject.Find(nomPNJ).GetComponent<Dialogues>();
+        dialogNameBox.text = nomPNJ;
+        var dialogues = GameObject.Find(nomPNJ).GetComponent<DialogueParDefaut>();
+        if (name == "Miranda")
+        {
+            dialogues = GameObject.Find(nomPNJ).GetComponent<DialoguesAvecMiranda>();
+        }
+        else if (name == "Timmy")
+        {
+            dialogues = GameObject.Find(nomPNJ).GetComponent<DialoguesAvecTimmy>();
+        }
+        
 
         if(dialogues.index == -1)
         {
             movement.enabled = false;
-            boiteDeDialogue.SetActive(true);
+            messageBox.SetActive(true);
         }
         if(dialogues.DialogueSuivant())
         {
-            boiteDeDialogue.GetComponentInChildren<Text>().text = dialogues.dialogues[dialogues.index];
+            messageBox.GetComponentInChildren<Text>().text = dialogues.dialogues[dialogues.index];
         }
         else
         {
-            boiteDeDialogue.SetActive(false);
+            messageBox.SetActive(false);
             movement.enabled = true;
             dialogues.index = -1;
         }
@@ -176,5 +201,14 @@ public class TimmyBehavior : MonoBehaviour
         var _castlePlacement = transform.position + Vector3.down;
 
         var _castle = Instantiate(castlePrefab, _castlePlacement, Quaternion.identity);
+    }
+
+    public void  SelectionMonologueTimer()
+    {
+        if (showMonologue)
+        {
+            messageBox.SetActive(false);
+            showMonologue = false;
+        }
     }
 }
