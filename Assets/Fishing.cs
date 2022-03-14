@@ -27,10 +27,14 @@ public class Fishing : MonoBehaviour
     public SpriteRenderer hookSpriteRenderer;
 
     public Transform progressBarContainer;
-
-
+    public GameObject player;
 
     private void Start()
+    {
+
+    }
+
+    private void OnEnable()
     {
         Resize();
     }
@@ -62,15 +66,16 @@ public class Fishing : MonoBehaviour
             hookPullVelocity += hookPullPower * Time.deltaTime;
         }
         hookPullVelocity -= hookGravityPower * Time.deltaTime;
-        if(hookPosition <= 0.05)
-        {
-            hookPullVelocity = 0;
-        }
-        else if(hookPosition >= 0.95)
-        {
-            hookPullVelocity = 0;
-        }
+        
         hookPosition += hookPullVelocity;
+        if (hookPosition <= 0.05f)
+        {
+            hookPullVelocity = 0;
+        }
+        else if (hookPosition >= 0.95f)
+        {
+            hookPullVelocity = 0;
+        }
         hookPosition = Mathf.Clamp(hookPosition, hookSize/2, 1-hookSize/2);
 
         hook.position = Vector3.Lerp(botPivot.position, topPivot.position, hookPosition);
@@ -94,6 +99,11 @@ public class Fishing : MonoBehaviour
         }
 
         hookProgress = Mathf.Clamp(hookProgress, 0f, 1f);
+        if(hookProgress == 1f)
+        {
+            player.GetComponent<PlayerMovement>().enabled = false;
+            this.gameObject.SetActive(false);
+        }
     }
 
     public void Resize()
