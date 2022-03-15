@@ -29,11 +29,6 @@ public class Fishing : MonoBehaviour
     public Transform progressBarContainer;
     public GameObject player;
 
-    private void Start()
-    {
-
-    }
-
     private void OnEnable()
     {
         Resize();
@@ -101,7 +96,11 @@ public class Fishing : MonoBehaviour
         hookProgress = Mathf.Clamp(hookProgress, 0f, 1f);
         if(hookProgress == 1f)
         {
-            player.GetComponent<PlayerMovement>().enabled = false;
+            hookProgress = 0f;
+            ls.y = hookProgress;
+            progressBarContainer.localScale = ls;
+
+            player.GetComponent<PlayerMovement>().enabled = true;
             this.gameObject.SetActive(false);
         }
     }
