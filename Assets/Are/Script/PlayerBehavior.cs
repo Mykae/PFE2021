@@ -11,7 +11,8 @@ public class PlayerBehavior : MonoBehaviour
     private Transform castlePrefab;
 
     public PlayerMovement movement;
-    public Text actionText;
+    private GameObject actionButon;
+    private Text actionText;
     public string selectionMonologue = "TEXTE_DE_DEPART";
     private bool showMonologue = true;
 
@@ -27,9 +28,18 @@ public class PlayerBehavior : MonoBehaviour
 
     private GameObject LastEncounteredPlayer;
 
-    private void OnEnable()
+    private void Awake()
     {
         movement = GetComponent<PlayerMovement>();
+        actionButon = GameObject.Find("Bouton_Action");
+        actionText = actionButon.GetComponentInChildren<Text>();
+    }
+
+    private void OnEnable()
+    {
+        actionButon.SetActive(false);
+        showMonologue = true;
+        movement.enabled = true;
         dialogNameBox.text = name;
         messageBox.SetActive(true);
         messageBox.GetComponentInChildren<Text>().text = selectionMonologue;
@@ -79,20 +89,21 @@ public class PlayerBehavior : MonoBehaviour
 
     private void ActionButton()
     {
+        actionButon.SetActive(false);
         if (pecheTriggerBox)
         {
             Debug.Log("J'ai pêché hihihi");
         }
-        if (chateauTriggerBox)
+        else if (chateauTriggerBox)
         {
             PlacerChateauDeSable();
         }
-        if (playerTriggerBox)
+        else if (playerTriggerBox)
         {
-            GetComponent<PlayerBehavior>().enabled = false;
-            
+            this.enabled = false;
+
         }
-        if (pnjTriggerBox)
+        else if (pnjTriggerBox)
             Parler(lastEncounteredPNJ);
     }
 
@@ -119,50 +130,54 @@ public class PlayerBehavior : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.tag == "Player" && collision.name != name)
+        if (isActiveAndEnabled && movement.enabled == true && !messageBox.activeSelf)
         {
-            playerTriggerBox = true;
-            LastEncounteredPlayer = collision.gameObject;
-        }
-        if (collision.tag == "Peche")
-        {
-            pecheTriggerBox = true;
-        }
-        if (collision.tag == "Chateau")
-        {
-            chateauTriggerBox = true;
-        }
-        if (collision.tag == "PNJ")
-        {
-            pnjTriggerBox = true;
-            lastEncounteredPNJ = collision.name;
+           if (collision.tag == "Player" && collision.name != name)
+            {
+                playerTriggerBox = true;
+                actionButon.SetActive(true);
+                LastEncounteredPlayer = collision.gameObject;
+            }
+            else if (collision.tag == "Peche")
+            {
+                actionButon.SetActive(true);
+                pecheTriggerBox = true;
+            }
+            else if (collision.tag == "Chateau")
+            {
+                actionButon.SetActive(true);
+                chateauTriggerBox = true;
+            }
+            else if (collision.tag == "PNJ")
+            {
+                actionButon.SetActive(true);
+                pnjTriggerBox = true;
+                lastEncounteredPNJ = collision.name;
+            }
         }
     }
 
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.tag == "Player" && collision.name != name)
-        {
-            playerTriggerBox = false;
-            actionText.text = "Rien pour le moment";
-        }
-        if (collision.tag == "Peche")
-        {
-            pecheTriggerBox = false;
-            actionText.text = "Rien pour le moment";
-        }
-        if (collision.tag == "Chateau")
-        {
-            chateauTriggerBox = false;
-            actionText.text = "Rien pour le moment";
-        }
-        if (collision.tag == "PNJ")
-        {
-            pnjTriggerBox = false;
-            actionText.text = "Rien pour le moment";
-        }
-
+        if (isActiveAndEnabled)
+            if (collision.tag == "Player" && collision.name != name)
+            {
+                playerTriggerBox = false;
+                actionButon.SetActive(false);
+            }
+            else if (collision.tag == "Peche")
+            {
+                pecheTriggerBox = false;
+            }
+            else if (collision.tag == "Chateau")
+            {
+                chateauTriggerBox = false;
+            }
+            else if (collision.tag == "PNJ")
+            {
+                pnjTriggerBox = false;
+            }
     }
 
     void Parler(string nomPNJ)
