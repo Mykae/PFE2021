@@ -265,7 +265,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -100.00001, y: 360}
+  m_AnchoredPosition: {x: -100.00001, y: 400}
   m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6309887457652499629
@@ -294,7 +294,7 @@ RectTransform:
   m_GameObject: {fileID: 6309887457652499629}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 70, y: 0.5, z: 1}
+  m_LocalScale: {x: 70, y: 200, z: 1}
   m_Children: []
   m_Father: {fileID: 6309887458237350855}
   m_RootOrder: 4
@@ -302,7 +302,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -100, y: 0}
-  m_SizeDelta: {x: 1, y: 6}
+  m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &6309887457652499635
 SpriteRenderer:
@@ -387,7 +387,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -100.00001, y: -360}
+  m_AnchoredPosition: {x: -100.00001, y: -400}
   m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6309887458237350848
@@ -408,7 +408,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6309887458237350855
 RectTransform:
   m_ObjectHideFlags: 0
@@ -490,15 +490,15 @@ MonoBehaviour:
   topPivot: {fileID: 6309887457627210586}
   botPivot: {fileID: 6309887457834491822}
   fish: {fileID: 6309887458988418276}
-  timerMultiply: 3
-  smoothMotion: 1
+  timerMultiply: 1
+  smoothMotion: 2
   hook: {fileID: 6309887457652499628}
   hookPosition: 0
-  hookSize: 0.1
+  hookSize: 0.25
   hookPower: 0.25
   hookPullVelocity: 0
-  hookPullPower: 0.03
-  hookGravityPower: 0.012
+  hookPullPower: 0.01
+  hookGravityPower: 0.005
   hookProgressDegradePower: 0.1
   hookSpriteRenderer: {fileID: 6309887457652499635}
   progressBarContainer: {fileID: 6309887458477478716}

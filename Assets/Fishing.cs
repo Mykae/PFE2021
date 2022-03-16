@@ -31,9 +31,13 @@ public class Fishing : MonoBehaviour
 
     private void OnEnable()
     {
-        Resize();
+        //Resize();
     }
 
+    private void Start()
+    {
+        //Resize();
+    }
     private void Update()
     {
         Fish();
@@ -63,15 +67,15 @@ public class Fishing : MonoBehaviour
         hookPullVelocity -= hookGravityPower * Time.deltaTime;
         
         hookPosition += hookPullVelocity;
-        if (hookPosition <= 0.05f)
+        if (hookPosition <= 0.125f)
         {
             hookPullVelocity = 0;
         }
-        else if (hookPosition >= 0.95f)
+        else if (hookPosition >= 0.875f)
         {
             hookPullVelocity = 0;
         }
-        hookPosition = Mathf.Clamp(hookPosition, hookSize/2, 1-hookSize/2);
+        hookPosition = Mathf.Clamp(hookPosition, hookSize/2, 1-(hookSize/2));
 
         hook.position = Vector3.Lerp(botPivot.position, topPivot.position, hookPosition);
     }
@@ -96,6 +100,7 @@ public class Fishing : MonoBehaviour
         hookProgress = Mathf.Clamp(hookProgress, 0f, 1f);
         if(hookProgress == 1f)
         {
+            hookPosition = 0f;
             hookProgress = 0f;
             ls.y = hookProgress;
             progressBarContainer.localScale = ls;
@@ -111,7 +116,7 @@ public class Fishing : MonoBehaviour
         float ySize = b.size.y;
         Vector3 ls = hook.localScale;
         float distance = Vector3.Distance(topPivot.position, botPivot.position);
-        ls.y = (distance / ySize * hookSize);
-        hook.localScale = -ls;
+        ls.y = distance / (ySize * hookSize);
+        hook.localScale = ls;
     }
 }
