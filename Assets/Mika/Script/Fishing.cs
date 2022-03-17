@@ -60,7 +60,7 @@ public class Fishing : MonoBehaviour
 
     public void Hook()
     {
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButton("Jump"))
         {
             hookPullVelocity += hookPullPower * Time.deltaTime;
         }

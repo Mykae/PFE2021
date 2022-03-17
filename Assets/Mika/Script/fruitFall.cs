@@ -13,6 +13,7 @@ public class fruitFall : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerFruit = GameObject.FindGameObjectWithTag("PlayerFruit").GetComponent<playerFruit>();
         speed = Random.Range(minSpeed, maxSpeed);
     }
 
@@ -24,15 +25,15 @@ public class fruitFall : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        if (collision.tag == "PlayerFruit")
         {
             playerFruit.AddFruit(value);
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
-        if (collision.tag == "ground")
+        if (collision.tag == "GroundFruit")
         {
 
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
 }
