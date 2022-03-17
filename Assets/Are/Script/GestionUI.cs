@@ -3,26 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class GestionUI : MonoBehaviour
 {
+    
     [SerializeField]
     private GameObject tableauDeQuetes;
     private GameObject queteEnCours;
 
-    //Quêtes Timmy
-
-
-
-    // Start is called before the first frame update
     void Start()
     {
         queteEnCours = tableauDeQuetes.transform.GetChild(1).gameObject;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     //indiceQuete pour la quête 1 2 ou 3 du personnage

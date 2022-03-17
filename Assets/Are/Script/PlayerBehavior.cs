@@ -63,6 +63,9 @@ public class PlayerBehavior : MonoBehaviour
 
     void Update()
     {
+        if (Time.timeScale == 0)
+            return;
+
         if (showMonologue)
         {
             if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))){
@@ -130,7 +133,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (isActiveAndEnabled && movement.enabled == true && !messageBox.activeSelf)
+        if (isActiveAndEnabled && movement.enabled == true && !messageBox.activeSelf && Time.timeScale != 0)
         {
            if (collision.tag == "Player" && collision.name != name)
             {
@@ -161,6 +164,8 @@ public class PlayerBehavior : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (isActiveAndEnabled)
+        {
+            actionButon.SetActive(false);
             if (collision.tag == "Player" && collision.name != name)
             {
                 playerTriggerBox = false;
@@ -178,6 +183,7 @@ public class PlayerBehavior : MonoBehaviour
             {
                 pnjTriggerBox = false;
             }
+        }
     }
 
     void Parler(string nomPNJ)

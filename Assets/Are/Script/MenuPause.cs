@@ -2,47 +2,68 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MenuPause : MonoBehaviour
 {
     // TODO public GameObject victoryScreen;
-    public GameObject pauseScreen;
+    [SerializeField] private GameObject actionButton, pauseScreen;
 
-    public bool onPause = false;
+    private bool isGamePaused;
 
     public void Awake()
     {
         Time.timeScale = 1;
     }
 
+    private void Start()
+    {
+        isGamePaused = false;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(isGamePaused)
+                DisablePause();
+            else
+                EnablePause();
+        }
+    }
+
+    public void loadMenuScene()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void loadGameScene()
+    {
+        SceneManager.LoadScene(1);
+    }
 
     public void EnablePause()
     {
         Time.timeScale = 0;
-        onPause = true;
+        isGamePaused = true;
         pauseScreen.SetActive(true);
+        actionButton.SetActive(false);
+        /*isActionButtonEnabled = actionButton.activeInHierarchy ? true : false;
+        if (isActionButtonEnabled)
+            actionButton.SetActive(false);*/
+
     }
 
     public void DisablePause()
     {
         Time.timeScale = 1;
-        onPause = false;
+        isGamePaused = false;
         pauseScreen.SetActive(false);
-    }
-
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        /*
+        if (isActionButtonEnabled)
         {
-            if (onPause)
-            {
-                DisablePause();
-            }
-            else
-            {
-                EnablePause();
-            }
-        }
+            actionButton.SetActive(true);
+        }*/
     }
 
 }
