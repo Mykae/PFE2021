@@ -11,6 +11,7 @@ TagManager:
   - Collectible
   - GroundFruit
   - PlayerFruit
+  - Fruit
   layers:
   - Default
   - TransparentFX
