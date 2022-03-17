@@ -9,6 +9,8 @@ TagManager:
   - Chateau
   - PNJ
   - Collectible
+  - GroundFruit
+  - PlayerFruit
   layers:
   - Default
   - TransparentFX
