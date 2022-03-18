@@ -15,6 +15,15 @@ public class PlayerMovement : MonoBehaviour
     public TilemapCollider2D Layer0;
     public TilemapCollider2D Layer1;
 
+    private void OnEnable()
+    {
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+    }
+
+    private void OnDisable()
+    {
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+    }
 
     enum Direction { North, East, South, West };
     Direction playerDirection;
