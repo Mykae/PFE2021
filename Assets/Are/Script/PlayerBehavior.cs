@@ -51,6 +51,7 @@ public class PlayerBehavior : MonoBehaviour
     {
         if (LastEncounteredPlayer != null)
         {
+            Debug.Log("S'il y a des erreurs juste après ce message ne paniquez pas, c'est normal <3");
             movement.enabled = false;
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
             transform.Find("Main Camera").SetParent(LastEncounteredPlayer.transform);
