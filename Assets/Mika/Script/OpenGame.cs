@@ -5,6 +5,7 @@ using UnityEngine;
 public class OpenGame : MonoBehaviour
 {
     public GameObject mg;
+    public GameObject player;
     public bool isIn = false;
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -22,7 +23,8 @@ public class OpenGame : MonoBehaviour
         if (isIn == true && Input.GetKeyDown(KeyCode.E))
         {
             mg.SetActive(true);
-            Time.timeScale = 0;
+            player.GetComponent<PlayerMovement>().enabled = false;
+            //Time.timeScale = 0;
         }
     }
 }

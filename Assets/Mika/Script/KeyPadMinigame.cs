@@ -10,6 +10,7 @@ public class KeyPadMinigame : MonoBehaviour
     public Text inputCode;
     public int longueurCode = 5;
     public float codeResetTime = 0.5f;
+    public GameObject player;
 
     private bool isResetting = false;
     public bool isCleared = false;
@@ -56,7 +57,7 @@ public class KeyPadMinigame : MonoBehaviour
         }
         if(isCleared == true)
         {
-            Time.timeScale = 1;
+            player.GetComponent<PlayerMovement>().enabled = true;
             this.gameObject.SetActive(false);
         }
         inputCode.text = string.Empty;
