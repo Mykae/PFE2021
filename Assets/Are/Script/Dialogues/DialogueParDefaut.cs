@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dialogues : MonoBehaviour
+public class DialogueParDefaut : MonoBehaviour
 {
     public string[] dialogues;
     [HideInInspector]
