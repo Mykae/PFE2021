@@ -20,7 +20,7 @@ public class OpenGame : MonoBehaviour
 
     public void Update()
     {
-        if (isIn == true && Input.GetKeyDown(KeyCode.E))
+        if (isIn == true && (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Fire1")))
         {
             mg.SetActive(true);
             player.GetComponent<PlayerMovement>().enabled = false;
