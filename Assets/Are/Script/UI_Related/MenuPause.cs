@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class MenuPause : MonoBehaviour
 {
     // TODO public GameObject victoryScreen;
-    [SerializeField] private GameObject actionButton, pauseScreen;
+    [SerializeField] private GameObject actionButton, pauseScreen, ouiNonPrompt;
 
     private bool isGamePaused;
 
@@ -42,28 +42,30 @@ public class MenuPause : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    public void PromptfinDePartie()
+    {
+        Time.timeScale = 0;
+        isGamePaused = true;
+        ouiNonPrompt.SetActive(true);
+        actionButton.SetActive(false);
+    }
+
     public void EnablePause()
     {
         Time.timeScale = 0;
         isGamePaused = true;
         pauseScreen.SetActive(true);
         actionButton.SetActive(false);
-        /*isActionButtonEnabled = actionButton.activeInHierarchy ? true : false;
-        if (isActionButtonEnabled)
-            actionButton.SetActive(false);*/
 
     }
+
 
     public void DisablePause()
     {
         Time.timeScale = 1;
         isGamePaused = false;
         pauseScreen.SetActive(false);
-        /*
-        if (isActionButtonEnabled)
-        {
-            actionButton.SetActive(true);
-        }*/
+        ouiNonPrompt.SetActive(false);
     }
 
 }
