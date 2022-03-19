@@ -29,6 +29,11 @@ public class Fishing : MonoBehaviour
     public Transform progressBarContainer;
     public GameObject player;
 
+    private bool isEnding;
+    private bool isExit;
+
+    private Vector3 ls;
+
     private void OnEnable()
     {
         //Resize();
@@ -43,6 +48,8 @@ public class Fishing : MonoBehaviour
         Fish();
         Hook();
         ProgressCheck();
+        if (Input.GetKeyDown(KeyCode.Escape)) isExit = true;
+        CheckEnding();
     }
 
     public void Fish()
@@ -82,7 +89,7 @@ public class Fishing : MonoBehaviour
 
     public void ProgressCheck()
     {
-        Vector3 ls = progressBarContainer.localScale;
+        ls = progressBarContainer.localScale;
         ls.y = hookProgress;
         progressBarContainer.localScale = ls;
 
@@ -100,13 +107,7 @@ public class Fishing : MonoBehaviour
         hookProgress = Mathf.Clamp(hookProgress, 0f, 1f);
         if(hookProgress == 1f)
         {
-            hookPosition = 0f;
-            hookProgress = 0f;
-            ls.y = hookProgress;
-            progressBarContainer.localScale = ls;
-
-            player.GetComponent<PlayerMovement>().enabled = true;
-            this.gameObject.SetActive(false);
+            StartCoroutine(EndMinigame());
         }
     }
 
@@ -118,5 +119,30 @@ public class Fishing : MonoBehaviour
         float distance = Vector3.Distance(topPivot.position, botPivot.position);
         ls.y = distance / (ySize * hookSize);
         hook.localScale = ls;
+    }
+
+    public void CheckEnding()
+    {
+        if (isEnding == true || isExit == true)
+        {
+            hookPosition = 0f;
+            hookProgress = 0f;
+            ls.y = hookProgress;
+            progressBarContainer.localScale = ls;
+            player.GetComponent<PlayerMovement>().enabled = true;
+            isEnding = false;
+            isExit = false;
+            this.gameObject.SetActive(false);
+        }
+    }
+
+    private IEnumerator EndMinigame()
+    {
+        float pauseEndTime = Time.realtimeSinceStartup + 1;
+        while (Time.realtimeSinceStartup < pauseEndTime)
+        {
+            yield return 0;
+        }
+        isEnding = true;
     }
 }

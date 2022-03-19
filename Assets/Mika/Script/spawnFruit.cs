@@ -24,7 +24,8 @@ public class spawnFruit : MonoBehaviour
             Transform randomSpawnPoint = spawnFruits[Random.Range(0, spawnFruits.Length)];
             GameObject randomFruit = fruits[Random.Range(0, fruits.Length)];
 
-            Instantiate(randomFruit, randomSpawnPoint.position, Quaternion.identity);
+            GameObject SpawnedFruit = Instantiate(randomFruit, randomSpawnPoint.position, Quaternion.identity);
+            SpawnedFruit.tag = "SpawnedFruit";
 
             timeBetweenSpawns = tempsSpawn;
         }
