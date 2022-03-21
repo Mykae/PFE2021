@@ -20,6 +20,14 @@ public class DialogueParDefaut : MonoBehaviour
         
     }
 
+    // GameObject.Find("PNJ3").GetComponent<DialoguesAvecMiranda>().ChangerDialogues(new string[3] { "lsjg", "mojbpoudsif", "qsldbhqlsfb" });
+    public void ChangerDialogues(string[] nouveauxDialogues)
+    {
+        index = -1;
+        dialogues = new string[nouveauxDialogues.Length];
+        dialogues = nouveauxDialogues;
+    }
+
     public bool DialogueSuivant()
     {
         if(index +1 < dialogues.Length)
@@ -27,6 +35,7 @@ public class DialogueParDefaut : MonoBehaviour
             index++;
             return true;
         }
+        index = -1;
         return false;
     }
 }
