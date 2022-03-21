@@ -97731,7 +97731,7 @@ PrefabInstance:
     - target: {fileID: 1691041109362798693, guid: 340ad85e8b2001148b4da66695d461ca, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2117008461}
     - target: {fileID: 1691041109362798693, guid: 340ad85e8b2001148b4da66695d461ca, type: 3}
       propertyPath: minigame
       value: 
