@@ -14,6 +14,9 @@ public class PlayerMovement : MonoBehaviour
     Vector2 movement;
     public TilemapCollider2D Layer0;
     public TilemapCollider2D Layer1;
+    public RandomSound soundManager;
+
+    private bool hasSoundFinishedPlaying = true;
 
     private void OnEnable()
     {
@@ -64,6 +67,14 @@ public class PlayerMovement : MonoBehaviour
         float my = Input.GetAxisRaw("Vertical");
         shift = Input.GetKey(KeyCode.LeftShift);
 
+        if ((Mathf.Abs(mx) > 0 || Mathf.Abs(my) > 0) && (hasSoundFinishedPlaying))
+        {
+            hasSoundFinishedPlaying = false;
+            StartCoroutine(WaitForSound());
+            soundManager.PlayRandomSound();
+        }
+            
+
         movement = new Vector2(mx, my).normalized;
         facingDirection(mx, my);
     }
@@ -107,5 +118,11 @@ public class PlayerMovement : MonoBehaviour
     {
         height = layer;
         GetComponent<SpriteRenderer>().sortingOrder = height;
+    }
+
+    IEnumerator WaitForSound()
+    {
+        yield return new WaitForSeconds(0.7f);
+        hasSoundFinishedPlaying = true;
     }
 }
