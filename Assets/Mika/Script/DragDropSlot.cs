@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DragDropSlot : MonoBehaviour, IDropHandler
+public class DragDropSlot : MonoBehaviour, IDropHandler, IBeginDragHandler
 {
-    public GameObject itemIn;
+    public GameObject itemType;
+    public int itemValue;
 
     public void OnDrop(PointerEventData eventData)
     {
@@ -13,16 +14,34 @@ public class DragDropSlot : MonoBehaviour, IDropHandler
         if (eventData.pointerDrag != null)
         {
             eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
-            itemIn = eventData.pointerDrag.GetComponent<RectTransform>().gameObject;
+            itemType = eventData.pointerDrag.GetComponent<RectTransform>().gameObject.GetComponent<DragDrop>().type;
+            Debug.Log("type : " + itemType);
+            itemValue = eventData.pointerDrag.GetComponent<RectTransform>().gameObject.GetComponent<DragDrop>().value;
+            Debug.Log("value : " + itemValue);
         }
     }
 
-    public GameObject getItemIn()
+    public void OnBeginDrag(PointerEventData eventData)
     {
-        if (itemIn != null)
-            return itemIn;
+        Debug.Log("Quit area");
+        itemType = null;
+        itemValue = 0;
+    }
+
+    public GameObject getItemType()
+    {
+        if (itemType != null)
+            return itemType;
         else
             return null;
+    }
+
+    public int getItemValue()
+    {
+        if (itemType != null)
+            return itemValue;
+        else
+            return 0;
     }
 
 }
