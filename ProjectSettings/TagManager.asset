@@ -12,6 +12,7 @@ TagManager:
   - GroundFruit
   - PlayerFruit
   - Fruit
+  - SpawnedFruit
   - Door
   layers:
   - Default

@@ -17,6 +17,7 @@ public class playerFruit : MonoBehaviour
     public GameObject minigame;
     public GameObject player;
     private bool isEnding = false;
+    private bool isExit = false;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +32,7 @@ public class playerFruit : MonoBehaviour
         fruitCount = 0;
         winPanel.SetActive(false);
         isEnding = false;
+        fruitCountText.text = "Fruits : " + fruitCount.ToString() + "/" + goalFruit.ToString();
     }
 
     // Update is called once per frame
@@ -39,17 +41,8 @@ public class playerFruit : MonoBehaviour
         input = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(input * speed, rb.velocity.y);
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, wallLeft.position.x, wallRight.position.x), transform.position.y, transform.position.z);
-        if (isEnding == true)
-        {
-            player.GetComponent<PlayerMovement>().enabled = true;
-            GameObject[] allObjects = GameObject.FindGameObjectsWithTag("Fruit");
-            foreach (GameObject obj in allObjects)
-            {
-                Destroy(obj);
-            }
-            isEnding = false;
-            this.gameObject.SetActive(false);
-        }
+        if (Input.GetKeyDown(KeyCode.Escape)) isExit = true;
+        CheckEnding();
     }
 
     public void AddFruit(int number)
@@ -67,6 +60,22 @@ public class playerFruit : MonoBehaviour
         {
             winPanel.SetActive(true);
             StartCoroutine(EndMinigame());
+        }
+    }
+
+    public void CheckEnding()
+    {
+        if (isEnding == true || isExit == true)
+        {
+            player.GetComponent<PlayerMovement>().enabled = true;
+            GameObject[] allObjects = GameObject.FindGameObjectsWithTag("SpawnedFruit");
+            foreach (GameObject obj in allObjects)
+            {
+                Destroy(obj);
+            }
+            isEnding = false;
+            isExit = false;
+            minigame.gameObject.SetActive(false);
         }
     }
 
