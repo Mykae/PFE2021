@@ -30,6 +30,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
+        if (name == "Miranda")
+            walkSpeed = walkSpeed * 0.9f;
+        else if (name == "Timmy")
+            walkSpeed = walkSpeed * 1.1f;
+
         rb = GetComponent<Rigidbody2D>();
         shift = false;
     }

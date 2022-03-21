@@ -13,6 +13,7 @@ TagManager:
   - PlayerFruit
   - Fruit
   - SpawnedFruit
+  - Door
   layers:
   - Default
   - TransparentFX

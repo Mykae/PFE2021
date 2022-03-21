@@ -13,13 +13,12 @@ public class PlayerBehavior : MonoBehaviour
     public PlayerMovement movement;
     private GameObject actionButon;
     private Text actionText;
-    public string selectionMonologue = "TEXTE_DE_DEPART";
+    public DialogueParDefaut selectionMonologue;
     private bool showMonologue = true;
+    private float tempsMonologue = 0;
 
     //Différents types de trigger box
     bool playerTriggerBox = false;
-    bool pecheTriggerBox = false;
-    bool chateauTriggerBox = false;
     bool pnjTriggerBox = false;
 
     private string lastEncounteredPNJ;
@@ -33,6 +32,7 @@ public class PlayerBehavior : MonoBehaviour
         movement = GetComponent<PlayerMovement>();
         actionButon = GameObject.Find("Bouton_Action");
         actionText = actionButon.GetComponentInChildren<Text>();
+        selectionMonologue = GetComponent<DialogueParDefaut>();
     }
 
     private void OnEnable()
@@ -42,8 +42,8 @@ public class PlayerBehavior : MonoBehaviour
         movement.enabled = true;
         dialogNameBox.text = name;
         messageBox.SetActive(true);
-        messageBox.GetComponentInChildren<Text>().text = selectionMonologue;
-        Invoke("SelectionMonologueTimer", 10);
+        GestionMonologue();
+        FindObjectOfType<TeleportToInitialPosition>().needTP = true;
     }
 
     //Ce qu'il faut faire pour changer de joueur
@@ -51,33 +51,37 @@ public class PlayerBehavior : MonoBehaviour
     {
         if (LastEncounteredPlayer != null)
         {
-            Debug.Log("S'il y a des erreurs juste après ce message ne paniquez pas, c'est normal <3");
+            Debug.Log("S'il y a 2 erreurs juste après ce message ne paniquez pas, c'est normal <3");
             movement.enabled = false;
-            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            //GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
             transform.Find("Main Camera").SetParent(LastEncounteredPlayer.transform);
             LastEncounteredPlayer.transform.Find("Main Camera").transform.localPosition = new Vector3(0, 0, -10);
-            LastEncounteredPlayer.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+            //LastEncounteredPlayer.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
             LastEncounteredPlayer.GetComponent<PlayerBehavior>().enabled = true;
             LastEncounteredPlayer.GetComponent<PlayerMovement>().enabled = true;
         }
     }
 
+    private void FixedUpdate()
+    {
+        tempsMonologue += Time.deltaTime;
+    }
+
     void Update()
     {
         if (Time.timeScale == 0)
-            return;
-
-        if (showMonologue)
         {
-            if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))){
-                //movement.enabled = true;
-                messageBox.SetActive(false);
-                showMonologue = false;
-            }
             return;
         }
 
-        UpdateTextActionButton();
+        if (showMonologue)
+        {
+            if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) || tempsMonologue >= 10)
+            {
+                GestionMonologue();
+            }
+            return;
+        }
 
         
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) && movement.enabled)
@@ -94,42 +98,14 @@ public class PlayerBehavior : MonoBehaviour
     private void ActionButton()
     {
         actionButon.SetActive(false);
-        if (pecheTriggerBox)
-        {
-            Debug.Log("J'ai pêché hihihi");
-        }
-        else if (chateauTriggerBox)
-        {
-            PlacerChateauDeSable();
-        }
-        else if (playerTriggerBox)
+        //actions des mini jeux gérées sur le script de leur gameobject
+        if (playerTriggerBox)
         {
             this.enabled = false;
 
         }
         else if (pnjTriggerBox)
             Parler(lastEncounteredPNJ);
-    }
-
-    private void UpdateTextActionButton()
-    {
-        if (pecheTriggerBox)
-        {
-            actionText.text = "Pêcher";
-        }
-        else if (chateauTriggerBox)
-        {
-            actionText.text = "Construire";
-        }
-        else if (playerTriggerBox)
-        {
-            actionText.text = "Changer de perso";
-        }
-        else if (pnjTriggerBox)
-        {
-            actionText.text = "Parler";
-        }
-
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -139,24 +115,36 @@ public class PlayerBehavior : MonoBehaviour
            if (collision.tag == "Player" && collision.name != name)
             {
                 playerTriggerBox = true;
+                actionText.text = "Changer";
                 actionButon.SetActive(true);
                 LastEncounteredPlayer = collision.gameObject;
             }
             else if (collision.tag == "Peche")
             {
                 actionButon.SetActive(true);
-                pecheTriggerBox = true;
+                actionText.text = "Pêcher";
             }
-            else if (collision.tag == "Chateau")
+            else if (collision.tag == "Door")
             {
                 actionButon.SetActive(true);
-                chateauTriggerBox = true;
+                actionText.text = "Ouvrir";
             }
             else if (collision.tag == "PNJ")
             {
+                actionText.text = "Parler";
                 actionButon.SetActive(true);
                 pnjTriggerBox = true;
                 lastEncounteredPNJ = collision.name;
+            }
+            else if (collision.tag == "Fruit")
+            {
+                actionButon.SetActive(true);
+                actionText.text = "Cueillir";
+            }
+            else if (collision.tag == "Finish")
+            {
+                actionButon.SetActive(true);
+                actionText.text = "Terminer le jeu";
             }
         }
     }
@@ -170,15 +158,6 @@ public class PlayerBehavior : MonoBehaviour
             if (collision.tag == "Player" && collision.name != name)
             {
                 playerTriggerBox = false;
-                actionButon.SetActive(false);
-            }
-            else if (collision.tag == "Peche")
-            {
-                pecheTriggerBox = false;
-            }
-            else if (collision.tag == "Chateau")
-            {
-                chateauTriggerBox = false;
             }
             else if (collision.tag == "PNJ")
             {
@@ -214,7 +193,7 @@ public class PlayerBehavior : MonoBehaviour
         {
             messageBox.SetActive(false);
             movement.enabled = true;
-            dialogues.index = -1;
+            //dialogues.index = -1;
         }
     }
 
@@ -225,12 +204,20 @@ public class PlayerBehavior : MonoBehaviour
         var _castle = Instantiate(castlePrefab, _castlePlacement, Quaternion.identity);
     }
 
-    public void  SelectionMonologueTimer()
+    public void  GestionMonologue()
     {
         if (showMonologue)
         {
-            messageBox.SetActive(false);
-            showMonologue = false;
+            tempsMonologue = 0;
+            if (selectionMonologue.DialogueSuivant())
+            {
+                messageBox.GetComponentInChildren<Text>().text = selectionMonologue.dialogues[selectionMonologue.index];
+            }
+            else
+            {
+                messageBox.SetActive(false);
+                showMonologue = false;
+            }
         }
     }
 }
