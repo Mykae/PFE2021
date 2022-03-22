@@ -5,24 +5,34 @@ using UnityEngine.EventSystems;
 
 public class DragDropSlot : MonoBehaviour, IDropHandler
 {
-    public GameObject itemIn;
+    private GameObject itemType;
+    private int itemValue;
 
     public void OnDrop(PointerEventData eventData)
     {
-        Debug.Log("OnDropSlot");
+        //Debug.Log("OnDropSlot");
         if (eventData.pointerDrag != null)
         {
             eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
-            itemIn = eventData.pointerDrag.GetComponent<RectTransform>().gameObject;
+            itemType = eventData.pointerDrag.GetComponent<RectTransform>().gameObject.GetComponent<DragDrop>().type;
+            itemValue = eventData.pointerDrag.GetComponent<RectTransform>().gameObject.GetComponent<DragDrop>().value;
         }
     }
 
     public GameObject getItemIn()
     {
-        if (itemIn != null)
-            return itemIn;
+        if (itemType != null)
+            return itemType;
         else
             return null;
+    }
+
+    public int getItemValue()
+    {
+        if (itemType != null)
+            return itemValue;
+        else
+            return 0;
     }
 
 }
