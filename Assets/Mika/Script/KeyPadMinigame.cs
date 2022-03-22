@@ -15,8 +15,11 @@ public class KeyPadMinigame : MonoBehaviour
     private bool isResetting = false;
     public bool isCleared = false;
 
+    private RandomSound soundToPlay;
+
     private void OnEnable()
     {
+        soundToPlay = GetComponent<RandomSound>();
         isCleared = false;
         string code = string.Empty;
 
@@ -31,6 +34,7 @@ public class KeyPadMinigame : MonoBehaviour
 
     public void ButtonClick(int number)
     {
+        soundToPlay.PlayRandomSound();
         if (isResetting) return;
         inputCode.text += number;
         
@@ -38,6 +42,8 @@ public class KeyPadMinigame : MonoBehaviour
         {
             inputCode.text = "Correct";
             isCleared = true;
+            var i = player.GetComponent<PlaySound>();
+            i.Play(0);
             StartCoroutine(ResetCode());
         }
         else if (inputCode.text.Length >= longueurCode)

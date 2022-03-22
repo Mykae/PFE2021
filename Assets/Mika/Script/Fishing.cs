@@ -29,10 +29,15 @@ public class Fishing : MonoBehaviour
     public Transform progressBarContainer;
     public GameObject player;
 
+    public GameObject fishToInstantiate;
+
     private bool isEnding;
     private bool isExit;
 
     private Vector3 ls;
+
+    public PlaySound soundManager;
+    int soundToPlay;
 
     private void OnEnable()
     {
@@ -97,16 +102,26 @@ public class Fishing : MonoBehaviour
         float max = hookPosition + hookSize / 2;
         if(min < fishPosition && fishPosition < max)
         {
+            if (soundToPlay != 0)
+                soundManager.Stop();
+            soundToPlay = 0;
+            soundManager.Play(soundToPlay);
             hookProgress += hookPower * Time.deltaTime;
+            
         }
         else
         {
+            if (soundToPlay != 1)
+                soundManager.Stop();
+            soundToPlay = 1;
+            soundManager.Play(soundToPlay);
             hookProgress -= hookProgressDegradePower * Time.deltaTime;
         }
 
         hookProgress = Mathf.Clamp(hookProgress, 0f, 1f);
-        if(hookProgress == 1f)
+        if(hookProgress == 1f && !isEnding)
         {
+
             StartCoroutine(EndMinigame());
         }
     }
@@ -125,6 +140,13 @@ public class Fishing : MonoBehaviour
     {
         if (isEnding == true || isExit == true)
         {
+            if (isEnding) {
+                Instantiate(fishToInstantiate, player.transform.position, player.transform.rotation);
+                soundManager.Stop();
+                var i = player.GetComponent<PlaySound>();
+                i.Play(0);
+            }
+                
             hookPosition = 0f;
             hookProgress = 0f;
             ls.y = hookProgress;

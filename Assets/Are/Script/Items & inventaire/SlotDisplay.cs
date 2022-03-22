@@ -24,5 +24,7 @@ public class SlotDisplay : MonoBehaviour
         spriteImage.sprite = relatedSlot.item != null ? relatedSlot.item.sprite : null;
         if (relatedSlot.item != null)
             quantityText.text = relatedSlot.item.stackable ? relatedSlot.quantity + "" : ""; /* + "/" + relatedSlot.maxQuantity : "";*/
+
+        
     }
 }

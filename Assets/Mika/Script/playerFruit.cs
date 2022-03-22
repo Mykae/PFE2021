@@ -19,6 +19,8 @@ public class playerFruit : MonoBehaviour
     private bool isEnding = false;
     private bool isExit = false;
 
+    [SerializeField] private GameObject fruitsToInstantiate;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,7 +58,7 @@ public class playerFruit : MonoBehaviour
             fruitCount += number;
         }
         fruitCountText.text = "Fruits : " + fruitCount.ToString() + "/" + goalFruit.ToString();
-        if (fruitCount >= goalFruit)
+        if (fruitCount >= goalFruit && !isEnding)
         {
             winPanel.SetActive(true);
             StartCoroutine(EndMinigame());
@@ -67,6 +69,16 @@ public class playerFruit : MonoBehaviour
     {
         if (isEnding == true || isExit == true)
         {
+            if (isEnding)
+            {
+                for (int i = 0; i < fruitCount; i++)
+                {
+                    Instantiate(fruitsToInstantiate, player.transform.position, player.transform.rotation);
+                }
+                var k = player.GetComponent<PlaySound>();
+                k.Play(0);
+            }
+
             player.GetComponent<PlayerMovement>().enabled = true;
             GameObject[] allObjects = GameObject.FindGameObjectsWithTag("SpawnedFruit");
             foreach (GameObject obj in allObjects)
@@ -81,11 +93,13 @@ public class playerFruit : MonoBehaviour
 
     private IEnumerator EndMinigame()
     {
+        
         float pauseEndTime = Time.realtimeSinceStartup + 1;
         while (Time.realtimeSinceStartup < pauseEndTime)
         {
             yield return 0;
         }
         isEnding = true;
+
     }
 }

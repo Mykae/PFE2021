@@ -34,10 +34,4 @@ public class RandomSound : MonoBehaviour
         {
             m_Source.Stop();
         }
-
-    public IEnumerator WaitForSound()
-    {
-        PlayRandomSound();
-        yield return new WaitWhile(() => m_Source.isPlaying);
-    }
 }
