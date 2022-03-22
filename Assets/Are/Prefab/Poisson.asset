@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Poisson
   m_EditorClassIdentifier: 
   stackable: 1
-  sprite: {fileID: -8195753727382534561, guid: 45ab667865ef64240abf03e924a028b0, type: 3}
+  sprite: {fileID: 21300000, guid: c8de79d81223e58489b8887ead961700, type: 3}
