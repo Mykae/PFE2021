@@ -15,6 +15,10 @@ public class PlayerMovement : MonoBehaviour
     public TilemapCollider2D Layer0;
     public TilemapCollider2D Layer1;
     public RandomSound soundManager;
+    public Animator animator;
+    private float mx;
+    private float my;
+    public GameObject charaAnim;
 
     private bool hasSoundFinishedPlaying = true;
 
@@ -39,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
             walkSpeed = walkSpeed * 1.1f;
 
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         shift = false;
     }
 
@@ -46,6 +51,24 @@ public class PlayerMovement : MonoBehaviour
     {
         MovementInput();
         CheckHeight();
+
+        if(mx != 0 || my != 0)
+        {
+            animator.SetBool("isRunning", true);
+        }
+        else
+        {
+            animator.SetBool("isRunning", false);
+        }
+
+        if(mx > 0)
+        {
+            charaAnim.transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+        else if (mx < 0)
+        {
+            charaAnim.transform.eulerAngles = new Vector3(0, 180, 0);
+        }
     }
 
     private void FixedUpdate()
@@ -63,8 +86,8 @@ public class PlayerMovement : MonoBehaviour
 
     void MovementInput()
     {
-        float mx = Input.GetAxisRaw("Horizontal");
-        float my = Input.GetAxisRaw("Vertical");
+        mx = Input.GetAxisRaw("Horizontal");
+        my = Input.GetAxisRaw("Vertical");
         shift = Input.GetKey(KeyCode.LeftShift);
 
         if ((Mathf.Abs(mx) > 0 || Mathf.Abs(my) > 0) && (hasSoundFinishedPlaying) && Time.timeScale > 0)
