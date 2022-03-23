@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80301745f51b6634694f361fe0f769e7, type: 3}
-  m_Name: Poisson
+  m_Name: Lait
   m_EditorClassIdentifier: 
   stackable: 1
-  sprite: {fileID: 21300000, guid: 44e90ef6c193f6d44a19a896f3ac1740, type: 3}
+  sprite: {fileID: 21300000, guid: 315cb3da50f59d74fbbeb480dcbea11d, type: 3}

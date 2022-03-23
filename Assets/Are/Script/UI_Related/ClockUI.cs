@@ -14,6 +14,7 @@ public class ClockUI : MonoBehaviour
     private float rotationDegreesPerHour = 360f;
     private float hoursPerDay = 24f;
     public float day;
+    public bool shouldRing;
 
     //[SerializeField] float deltaTimeYo = 1;
     bool beforeFive = true;
@@ -40,7 +41,8 @@ public class ClockUI : MonoBehaviour
         if(hourNormalized >= 0.7082f && beforeFive)
         {
             beforeFive = false;
-            GetComponent<PlaySound>().Play(0);
+            if(shouldRing)
+                GetComponent<PlaySound>().Play(0);
         }
 
 
