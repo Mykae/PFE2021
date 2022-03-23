@@ -13,7 +13,7 @@ public class Collectible : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Player" && actualPlayer)
+        if(collision.tag == "Steps+ItemPicker" && actualPlayer)
         {
             Destroy(this.gameObject);
         }
@@ -22,7 +22,7 @@ public class Collectible : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        if (collision.tag == "Steps+ItemPicker")
             actualPlayer = false;
     }
 }

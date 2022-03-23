@@ -36,12 +36,19 @@ public class Fishing : MonoBehaviour
 
     private Vector3 ls;
 
+    public GameObject waitToFishAgain;
+
     public PlaySound soundManager;
     int soundToPlay;
 
     private void OnEnable()
     {
         //Resize();
+    }
+
+    private void OnDisable()
+    {
+        waitToFishAgain.GetComponent<OpenGame>().ExitSucessfullFishGame();
     }
 
     private void Start()
@@ -142,9 +149,12 @@ public class Fishing : MonoBehaviour
         {
             if (isEnding) {
                 Instantiate(fishToInstantiate, player.transform.position, player.transform.rotation);
+                GameObject.Find("Ludo").GetComponent<DialoguesAvecTimmy>().dialogues = new string[1] { "Super ! C’est un beau spécimen, je suis sûr qu’il sera délicieux. J’apporterai tous ces plats ce soir grâce à toi !" };
+                GameObject.Find("Ludo").GetComponent<DialoguesAvecMiranda>().dialogues = new string[1] { "Miranda ! N'oublie pas la fête ce soir, je ramenerai un plat avec ce beau poisson que Timmy m'a pêché !" };
+                GameObject.FindGameObjectWithTag("DontDestroy").GetComponent<DontDestroyOnLoad>().currentEnding = 1;
                 soundManager.Stop();
                 var i = player.GetComponent<PlaySound>();
-                i.Play(0);
+                i.Play(0);                
             }
                 
             hookPosition = 0f;
@@ -167,4 +177,6 @@ public class Fishing : MonoBehaviour
         }
         isEnding = true;
     }
+
+    
 }
