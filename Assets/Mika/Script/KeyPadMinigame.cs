@@ -15,8 +15,13 @@ public class KeyPadMinigame : MonoBehaviour
     private bool isResetting = false;
     public bool isCleared = false;
 
+    private RandomSound soundToPlay;
+
+    private bool waitForLastDigit = true;
+
     private void OnEnable()
     {
+        soundToPlay = GetComponent<RandomSound>();
         isCleared = false;
         string code = string.Empty;
 
@@ -31,20 +36,14 @@ public class KeyPadMinigame : MonoBehaviour
 
     public void ButtonClick(int number)
     {
+        if (!waitForLastDigit)
+            return;
+        soundToPlay.PlayRandomSound();
         if (isResetting) return;
         inputCode.text += number;
-        
-        if(inputCode.text == cardCode.text)
-        {
-            inputCode.text = "Correct";
-            isCleared = true;
-            StartCoroutine(ResetCode());
-        }
-        else if (inputCode.text.Length >= longueurCode)
-        {
-            inputCode.text = "Failed";
-            StartCoroutine(ResetCode());
-        }
+
+        if ((inputCode.text == cardCode.text || inputCode.text.Length >= longueurCode))
+            StartCoroutine(WaitForTextToBeVisible());
     }
 
     private IEnumerator ResetCode()
@@ -62,5 +61,25 @@ public class KeyPadMinigame : MonoBehaviour
         }
         inputCode.text = string.Empty;
         isResetting = false;
+    }
+
+    private IEnumerator WaitForTextToBeVisible()
+    {
+        waitForLastDigit = false;
+        yield return new WaitForSeconds(0.5f);
+        if (inputCode.text == cardCode.text)
+        {
+            inputCode.text = "Correct";
+            isCleared = true;
+            var i = player.GetComponent<PlaySound>();
+            i.Play(0);
+            StartCoroutine(ResetCode());
+        }
+        else if (inputCode.text.Length >= longueurCode)
+        {
+            inputCode.text = "Failed";
+            StartCoroutine(ResetCode());
+        }
+        waitForLastDigit = true;
     }
 }

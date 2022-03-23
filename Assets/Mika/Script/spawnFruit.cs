@@ -10,6 +10,9 @@ public class spawnFruit : MonoBehaviour
     public float tempsSpawn;
     public GameObject player;
 
+    public RandomSound soundManager;
+    //int soundToPlay = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +28,9 @@ public class spawnFruit : MonoBehaviour
             GameObject randomFruit = fruits[Random.Range(0, fruits.Length)];
 
             GameObject SpawnedFruit = Instantiate(randomFruit, randomSpawnPoint.position, Quaternion.identity);
+
             SpawnedFruit.tag = "SpawnedFruit";
+            soundManager.PlayRandomSound();
 
             timeBetweenSpawns = tempsSpawn;
         }

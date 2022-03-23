@@ -14,6 +14,10 @@ public class ClockUI : MonoBehaviour
     private float rotationDegreesPerHour = 360f;
     private float hoursPerDay = 24f;
     public float day;
+    public bool shouldRing;
+
+    //[SerializeField] float deltaTimeYo = 1;
+    bool beforeFive = true;
 
     private void Start()
     {
@@ -25,10 +29,23 @@ public class ClockUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Time.timeScale = deltaTimeYo;
+
         day += Time.deltaTime / REAL_SECONDS_PER_INGAME_DAY;
 
         float hourNormalized = day % 1f;
-        
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            beforeFive = true;
+        }
+        if(hourNormalized >= 0.7082f && beforeFive)
+        {
+            beforeFive = false;
+            if(shouldRing)
+                GetComponent<PlaySound>().Play(0);
+        }
+
+
 
         hourClockHand.eulerAngles = new Vector3(0, 0, -hourNormalized * rotationDegreesPerHour * 2);
 
