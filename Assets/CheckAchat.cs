@@ -9,12 +9,17 @@ public class CheckAchat : MonoBehaviour
     public GameObject[] slotItemTypes;
     public int[] achatItemValue;
     public int[] slotItemValue;
+    public int[] slotItemGoal;
+    public int validate;
+    public bool isWon;
 
-    private void Awake()
+    private void OnEnable()
     {
         achatItemTypes = new GameObject[slots.Length];
         achatItemValue = new int[slots.Length];
         slotItemValue = new int[slotItemTypes.Length];
+        validate = 0;
+        isWon = false;
     }
 
     private void Update()
@@ -43,10 +48,19 @@ public class CheckAchat : MonoBehaviour
                 achatItemValue[i] = 0;
             }
 
-                for (int i = 0; i < slotItemTypes.Length; i++)
+            for (int i = 0; i < slotItemTypes.Length; i++)
             {
                 Debug.Log("Type : " + slotItemTypes[i] + " | Quantity : " + slotItemValue[i]);
                 slotItemValue[i] = 0;
+                if (slotItemValue[i] == slotItemGoal[i])
+                {
+                    validate++;
+                }
+                if(validate == slotItemTypes.Length)
+                {
+                    Debug.Log("C'est gagné");
+                    isWon = true;
+                }
             }
 
             

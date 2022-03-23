@@ -7876,6 +7876,9 @@ MonoBehaviour:
   - {fileID: 7695183741799709319, guid: 8333fb894d0c4174d997fb2d998f7bc7, type: 3}
   achatItemValue: 
   slotItemValue: 
+  slotItemGoal: 
+  validate: 0
+  isWon: 0
 --- !u!1 &149763128 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1691041108744425362, guid: 340ad85e8b2001148b4da66695d461ca, type: 3}
@@ -9907,7 +9910,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &945520425
 RectTransform:
   m_ObjectHideFlags: 0
@@ -39534,6 +39537,90 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 158689701, guid: 0de89f419510ee6428489b486e970af7, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 158689702, guid: 0de89f419510ee6428489b486e970af7, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 158689702, guid: 0de89f419510ee6428489b486e970af7, type: 3}
+      propertyPath: m_FlipY
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198309167, guid: 0de89f419510ee6428489b486e970af7, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198309168, guid: 0de89f419510ee6428489b486e970af7, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198309168, guid: 0de89f419510ee6428489b486e970af7, type: 3}
+      propertyPath: m_FlipY
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 469994752, guid: 0de89f419510ee6428489b486e970af7, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 469994753, guid: 0de89f419510ee6428489b486e970af7, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 469994753, guid: 0de89f419510ee6428489b486e970af7, type: 3}
+      propertyPath: m_FlipY
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 667706166, guid: 0de89f419510ee6428489b486e970af7, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 667706167, guid: 0de89f419510ee6428489b486e970af7, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 667706167, guid: 0de89f419510ee6428489b486e970af7, type: 3}
+      propertyPath: m_FlipY
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1144249280, guid: 0de89f419510ee6428489b486e970af7, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1144249281, guid: 0de89f419510ee6428489b486e970af7, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1144249281, guid: 0de89f419510ee6428489b486e970af7, type: 3}
+      propertyPath: m_FlipY
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1381274929, guid: 0de89f419510ee6428489b486e970af7, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1381274930, guid: 0de89f419510ee6428489b486e970af7, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1381274930, guid: 0de89f419510ee6428489b486e970af7, type: 3}
+      propertyPath: m_FlipY
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1837221789, guid: 0de89f419510ee6428489b486e970af7, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1837221790, guid: 0de89f419510ee6428489b486e970af7, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1837221790, guid: 0de89f419510ee6428489b486e970af7, type: 3}
+      propertyPath: m_FlipY
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1804956871406489600, guid: 0de89f419510ee6428489b486e970af7, type: 3}
       propertyPath: m_RootOrder
       value: 0
