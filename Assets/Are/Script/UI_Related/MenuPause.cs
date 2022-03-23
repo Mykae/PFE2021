@@ -11,9 +11,12 @@ public class MenuPause : MonoBehaviour
 
     private bool isGamePaused;
 
+    private RandomSound soundToPlay;
+
     public void Awake()
     {
         Time.timeScale = 1;
+        soundToPlay = GetComponent<RandomSound>();
     }
 
     private void Start()
@@ -44,6 +47,7 @@ public class MenuPause : MonoBehaviour
 
     public void PromptfinDePartie()
     {
+        PlaySound();
         Time.timeScale = 0;
         isGamePaused = true;
         ouiNonPrompt.SetActive(true);
@@ -52,6 +56,7 @@ public class MenuPause : MonoBehaviour
 
     public void EnablePause()
     {
+        PlaySound();
         Time.timeScale = 0;
         isGamePaused = true;
         pauseScreen.SetActive(true);
@@ -62,10 +67,17 @@ public class MenuPause : MonoBehaviour
 
     public void DisablePause()
     {
+        PlaySound();
         Time.timeScale = 1;
         isGamePaused = false;
         pauseScreen.SetActive(false);
         ouiNonPrompt.SetActive(false);
     }
+
+    public void PlaySound()
+    {
+        soundToPlay.PlayRandomSound();
+    }
+
 
 }

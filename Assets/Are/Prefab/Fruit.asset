@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Fruit
   m_EditorClassIdentifier: 
   stackable: 1
-  sprite: {fileID: 2134584563556110807, guid: 71838992eb7fa624fb7d9506d4a16d0b, type: 3}
+  sprite: {fileID: 21300000, guid: 068d9f5e0c210b04692a377c2cfc4a56, type: 3}

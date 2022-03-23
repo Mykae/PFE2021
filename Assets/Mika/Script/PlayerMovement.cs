@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
         float my = Input.GetAxisRaw("Vertical");
         shift = Input.GetKey(KeyCode.LeftShift);
 
-        if ((Mathf.Abs(mx) > 0 || Mathf.Abs(my) > 0) && (hasSoundFinishedPlaying))
+        if ((Mathf.Abs(mx) > 0 || Mathf.Abs(my) > 0) && (hasSoundFinishedPlaying) && Time.timeScale > 0)
         {
             hasSoundFinishedPlaying = false;
             StartCoroutine(WaitForSound());
@@ -122,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator WaitForSound()
     {
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(0.5f);
         hasSoundFinishedPlaying = true;
     }
 }
