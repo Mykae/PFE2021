@@ -34,6 +34,15 @@ public class KeyPadMinigame : MonoBehaviour
         inputCode.text = string.Empty;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            player.GetComponent<PlayerMovement>().enabled = true;
+            this.gameObject.SetActive(false);
+        }
+        }
+
     public void ButtonClick(int number)
     {
         if (!waitForLastDigit)

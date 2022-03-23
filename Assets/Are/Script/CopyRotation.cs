@@ -8,6 +8,6 @@ public class CopyRotation : MonoBehaviour
 
     private void OnEnable()
     {
-        //transform.rotation = rotationToCopy.transform;
+        transform.rotation = rotationToCopy.transform.rotation;
     }
 }

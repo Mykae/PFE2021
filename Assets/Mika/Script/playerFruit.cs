@@ -19,6 +19,8 @@ public class playerFruit : MonoBehaviour
     private bool isEnding = false;
     private bool isExit = false;
 
+    public GameObject[] pommesDansPanier;
+
     [SerializeField] private GameObject fruitsToInstantiate;
 
     // Start is called before the first frame update
@@ -58,6 +60,31 @@ public class playerFruit : MonoBehaviour
             fruitCount += number;
         }
         fruitCountText.text = "Fruits : " + fruitCount.ToString() + "/" + goalFruit.ToString();
+        switch (fruitCount)
+        {
+            case 0:
+                pommesDansPanier[0].SetActive(false);
+                break;
+            case 1:
+                pommesDansPanier[0].SetActive(true);
+                pommesDansPanier[1].SetActive(false);
+                break;
+            case 2:
+                pommesDansPanier[1].SetActive(true);
+                pommesDansPanier[2].SetActive(false);
+                break;
+            case 3:
+                pommesDansPanier[2].SetActive(true);
+                pommesDansPanier[3].SetActive(false);
+                break;
+            case 4:
+                pommesDansPanier[3].SetActive(true);
+                pommesDansPanier[4].SetActive(false);
+                break;
+            case 5:
+                pommesDansPanier[4].SetActive(true);
+                break;
+        }
         if (fruitCount >= goalFruit && !isEnding)
         {
             winPanel.SetActive(true);
