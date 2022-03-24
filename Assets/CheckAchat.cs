@@ -12,6 +12,7 @@ public class CheckAchat : MonoBehaviour
     public int[] slotItemGoal;
     public int validate;
     public bool isWon;
+    public bool reset;
 
     private void OnEnable()
     {
@@ -30,12 +31,12 @@ public class CheckAchat : MonoBehaviour
             {
                 achatItemTypes[i] = slots[i].getItemIn();
                 achatItemValue[i] = slots[i].getItemValue();
-                Debug.Log("type : " + achatItemTypes[i]);
+                //Debug.Log("type : " + achatItemTypes[i]);
                 for (int y = 0; y < slotItemTypes.Length; y++)
                 {
                     if (achatItemTypes[i] == slotItemTypes[y])
                     {
-                        Debug.Log("achat item value : " + achatItemValue[i]);
+                        //Debug.Log("achat item value : " + achatItemValue[i]);
                         slotItemValue[y] += achatItemValue[i];
                     }
                 }
@@ -50,39 +51,46 @@ public class CheckAchat : MonoBehaviour
 
             for (int i = 0; i < slotItemTypes.Length; i++)
             {
-                Debug.Log("Type : " + slotItemTypes[i] + " | Quantity : " + slotItemValue[i]);
-                slotItemValue[i] = 0;
+                //Debug.Log("Type : " + slotItemTypes[i] + " | Quantity : " + slotItemValue[i]);
                 if (slotItemValue[i] == slotItemGoal[i])
                 {
                     validate++;
+                    //Debug.Log("validate :" + validate);
                 }
                 if(validate == slotItemTypes.Length)
                 {
                     Debug.Log("C'est gagné");
                     isWon = true;
                 }
+                else
+                {
+                    //ResetGame();
+                }
+                slotItemValue[i] = 0;
             }
-
-            
+            validate = 0;
         }
-       
-        
 
-
-
-
-        /*for (int i = 0; i < slots.Length; i++)
+        if(isWon == true)
         {
-            achatItemTypes[i] = slots[i].getItemIn();
-            if(achatItemTypes[i] != null)
-            {
-                totalItems++;
-            }
+
         }
-        if (totalItems == slots.Length)
-        {
-            Debug.Log("Tout est plein");
-        }
-        totalItems = 0;*/
     }
+
+   /* public void ResetGame()
+    {
+        reset = true;
+        this.gameObject.SetActive(false);
+    }
+
+    /////////////////RESET LE JEU SI RESULTAT FAUX
+
+    public void OnDisable()
+    {
+        if(reset == true)
+        {
+            this.gameObject.SetActive(true);
+            reset = false;
+        }
+    }*/
 }
