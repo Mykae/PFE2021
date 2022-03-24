@@ -148,7 +148,6 @@ public class PlayerBehavior : MonoBehaviour
             {
                 if(collision.GetComponent<OpenGame>().player == gameObject)
                 {
-                    Debug.Log(collision.GetComponent<OpenGame>().player + " = " + gameObject);
                     actionButon.SetActive(true);
                     actionText.text = "Cueillir";
                 }                
