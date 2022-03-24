@@ -79,7 +79,7 @@ public class Fishing : MonoBehaviour
 
     public void Hook()
     {
-        if (Input.GetButton("Jump"))
+        if (Input.GetButton("Jump") || Input.GetMouseButtonDown(0))
         {
             hookPullVelocity += hookPullPower * Time.deltaTime;
         }
@@ -151,7 +151,6 @@ public class Fishing : MonoBehaviour
                 Instantiate(fishToInstantiate, player.transform.position, player.transform.rotation);
                 GameObject.Find("Ludo").GetComponent<DialoguesAvecTimmy>().dialogues = new string[1] { "Super ! C’est un beau spécimen, je suis sûr qu’il sera délicieux. J’apporterai tous ces plats ce soir grâce à toi !" };
                 GameObject.Find("Ludo").GetComponent<DialoguesAvecMiranda>().dialogues = new string[1] { "Miranda ! N'oublie pas la fête ce soir, je ramenerai un plat avec ce beau poisson que Timmy m'a pêché !" };
-                GameObject.FindGameObjectWithTag("DontDestroy").GetComponent<DontDestroyOnLoad>().currentEnding = 1;
                 soundManager.Stop();
                 var i = player.GetComponent<PlaySound>();
                 i.Play(0);                

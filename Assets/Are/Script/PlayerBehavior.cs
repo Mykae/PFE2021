@@ -155,7 +155,7 @@ public class PlayerBehavior : MonoBehaviour
             else if (collision.tag == "Finish")
             {
                 actionButon.SetActive(true);
-                actionText.text = "Terminer le jeu";
+                actionText.text = "Faire la fête";
             }
             else if (collision.tag == "Market")
             {

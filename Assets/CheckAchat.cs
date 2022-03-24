@@ -93,6 +93,7 @@ public class CheckAchat : MonoBehaviour
             GameObject.Find("Timmy").GetComponent<DialogueParDefaut>().dialogues = new string[1] 
             { "J’aimerais beaucoup aller construire des châteaux de sable sur la plage, mais je peux sans soucis aller " +
             "inviter tout le monde pour ce soir !" };
+            GameObject.FindGameObjectWithTag("DontDestroy").GetComponent<DontDestroyOnLoad>().currentEnding = 1;
             player.GetComponent<PlayerMovement>().enabled = true;
             var i = player.GetComponent<PlaySound>();
             i.Play(0);

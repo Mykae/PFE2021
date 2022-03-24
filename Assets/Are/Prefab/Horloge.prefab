@@ -152,7 +152,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 9
   m_Sprite: {fileID: 21300000, guid: 78112c8b1ae8be743a4e0d2fb46facac, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -550,6 +550,7 @@ MonoBehaviour:
   hourClockHand: {fileID: 9213535603264539271}
   minutesClockHand: {fileID: 9213535601909006519}
   day: 0
+  shouldRing: 0
 --- !u!82 &1251243647
 AudioSource:
   m_ObjectHideFlags: 0

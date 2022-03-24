@@ -82,7 +82,7 @@ public class KeyPadMinigame : MonoBehaviour
         {
             inputCode.text = "Correct";
             isCleared = true;
-            player.GetComponent<PlayerBehavior>().restartMonologue(new string[1] { "Voilà ! Le coffre est déverrouillé ! Je me demande bien ce qu’il y a dedans… Mais je préfère laisser Topaze découvrir par lui-même. Dans tous les cas, maintenant il pourra être présent ce soir ! " });
+            player.GetComponent<PlayerBehavior>().restartMonologue(new string[1] { "Voilà ! Le coffre est déverrouillé ! Je me demande bien ce qu’il y a dedans… Mais je préfère laisser Topaze découvrir par elle-même. Dans tous les cas, maintenant elle pourra être présente ce soir ! " });
             GameObject.Find("Topaze").GetComponent<DialoguesAvecTimmy>().dialogues = new string[2] { "Quoi, tu as réussi ?! Tu es trop fort Timmy, merci ! ", "Sois certain que je serai là ce soir !" };
             zoneDinteractionAFermerSiCoffreOuvert.GetComponent<OpenGame>().canGameBeReplayed = false;
             var i = player.GetComponent<PlaySound>();

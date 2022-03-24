@@ -106,7 +106,7 @@ public class playerFruit : MonoBehaviour
                 }
                 var k = player.GetComponent<PlaySound>();
                 k.Play(0);
-                player.GetComponent<PlayerBehavior>().restartMonologue(new string[2] { "Paaarfait, j’ai tout récupéré. Il est maintenant temps de rentrer chez moi pour préparer ce délicieux gâteau.", "Mais avant ça, il faudrait que je trouve quelqu’un qui puisse inviter tout le monde à la fête..."});
+                //player.GetComponent<PlayerBehavior>().restartMonologue(new string[2] { "Paaarfait, j’ai tout récupéré. Il est maintenant temps de rentrer chez moi pour préparer ce délicieux gâteau.", "Mais avant ça, il faudrait que je trouve quelqu’un qui puisse inviter tout le monde à la fête..."});
                 
             }
 
