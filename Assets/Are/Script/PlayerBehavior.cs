@@ -157,6 +157,14 @@ public class PlayerBehavior : MonoBehaviour
                 actionButon.SetActive(true);
                 actionText.text = "Terminer le jeu";
             }
+            else if (collision.tag == "Market")
+            {
+                if (collision.GetComponent<OpenGame>().canGameBeReplayed && collision.GetComponent<OpenGame>().player == gameObject)
+                {
+                    actionButon.SetActive(true);
+                    actionText.text = "Acheter";
+                }
+            }
         }
     }
 

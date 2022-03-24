@@ -16,6 +16,7 @@ TagManager:
   - Door
   - DontDestroy
   - ItemPicker
+  - Market
   layers:
   - Default
   - TransparentFX
