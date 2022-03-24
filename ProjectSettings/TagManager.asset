@@ -14,6 +14,8 @@ TagManager:
   - Fruit
   - SpawnedFruit
   - Door
+  - DontDestroy
+  - ItemPicker
   layers:
   - Default
   - TransparentFX

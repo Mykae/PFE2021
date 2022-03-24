@@ -14,7 +14,7 @@ public class PlayerBehavior : MonoBehaviour
     private GameObject actionButon;
     private Text actionText;
     public DialogueParDefaut selectionMonologue;
-    private bool showMonologue = true;
+    public bool showMonologue = true;
     private float tempsMonologue = 0;
 
     //Différents types de trigger box
@@ -51,11 +51,13 @@ public class PlayerBehavior : MonoBehaviour
     {
         if (LastEncounteredPlayer != null)
         {
-            Debug.Log("S'il y a 2 erreurs juste après ce message ne paniquez pas, c'est normal <3");
+            Debug.Log("S'il y a EXACTEMENT 3 ERREURS juste après ce message ne paniquez pas, c'est normal <3");
             movement.enabled = false;
             //GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
             transform.Find("Main Camera").SetParent(LastEncounteredPlayer.transform);
+            transform.Find("Steps+ItemPicker").SetParent(LastEncounteredPlayer.transform);
             LastEncounteredPlayer.transform.Find("Main Camera").transform.localPosition = new Vector3(0, 0, -10);
+            LastEncounteredPlayer.transform.Find("Steps+ItemPicker").transform.localPosition = new Vector3(0, 0, 0);
             //LastEncounteredPlayer.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
             LastEncounteredPlayer.GetComponent<PlayerBehavior>().enabled = true;
             LastEncounteredPlayer.GetComponent<PlayerMovement>().enabled = true;
@@ -121,13 +123,19 @@ public class PlayerBehavior : MonoBehaviour
             }
             else if (collision.tag == "Peche")
             {
-                actionButon.SetActive(true);
-                actionText.text = "Pêcher";
+                if (collision.GetComponent<OpenGame>().canGameBeReplayed && collision.GetComponent<OpenGame>().player == gameObject)
+                {
+                    actionButon.SetActive(true);
+                    actionText.text = "Pêcher";
+                }
             }
             else if (collision.tag == "Door")
             {
-                actionButon.SetActive(true);
-                actionText.text = "Ouvrir";
+                if (collision.GetComponent<OpenGame>().canGameBeReplayed && collision.GetComponent<OpenGame>().player == gameObject)
+                {
+                    actionButon.SetActive(true);
+                    actionText.text = "Ouvrir";
+                }                
             }
             else if (collision.tag == "PNJ")
             {
@@ -138,8 +146,11 @@ public class PlayerBehavior : MonoBehaviour
             }
             else if (collision.tag == "Fruit")
             {
-                actionButon.SetActive(true);
-                actionText.text = "Cueillir";
+                if(collision.GetComponent<OpenGame>().player == gameObject)
+                {
+                    actionButon.SetActive(true);
+                    actionText.text = "Cueillir";
+                }                
             }
             else if (collision.tag == "Finish")
             {
@@ -219,5 +230,14 @@ public class PlayerBehavior : MonoBehaviour
                 showMonologue = false;
             }
         }
+    }
+
+    public void restartMonologue(string[] phrases)
+    {
+        selectionMonologue.ChangerDialogues(phrases);
+        showMonologue = true;
+        dialogNameBox.text = name;
+        messageBox.SetActive(true);
+        GestionMonologue();        
     }
 }

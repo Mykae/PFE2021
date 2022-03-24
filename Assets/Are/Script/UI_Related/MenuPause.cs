@@ -54,6 +54,16 @@ public class MenuPause : MonoBehaviour
         actionButton.SetActive(false);
     }
 
+    public void GoToEndingScreen()
+    {
+        Invoke("LoadEndScene", 5);
+    }
+
+    public void LoadEndScene()
+    {
+        SceneManager.LoadScene(2);
+    }
+
     public void EnablePause()
     {
         PlaySound();

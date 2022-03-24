@@ -19,6 +19,8 @@ public class KeyPadMinigame : MonoBehaviour
 
     private bool waitForLastDigit = true;
 
+    public GameObject zoneDinteractionAFermerSiCoffreOuvert;
+
     private void OnEnable()
     {
         soundToPlay = GetComponent<RandomSound>();
@@ -33,6 +35,15 @@ public class KeyPadMinigame : MonoBehaviour
         cardCode.text = code;
         inputCode.text = string.Empty;
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            player.GetComponent<PlayerMovement>().enabled = true;
+            this.gameObject.SetActive(false);
+        }
+        }
 
     public void ButtonClick(int number)
     {
@@ -71,6 +82,9 @@ public class KeyPadMinigame : MonoBehaviour
         {
             inputCode.text = "Correct";
             isCleared = true;
+            player.GetComponent<PlayerBehavior>().restartMonologue(new string[1] { "Voilà ! Le coffre est déverrouillé ! Je me demande bien ce qu’il y a dedans… Mais je préfère laisser Topaze découvrir par lui-même. Dans tous les cas, maintenant il pourra être présent ce soir ! " });
+            GameObject.Find("Topaze").GetComponent<DialoguesAvecTimmy>().dialogues = new string[2] { "Quoi, tu as réussi ?! Tu es trop fort Timmy, merci ! ", "Sois certain que je serai là ce soir !" };
+            zoneDinteractionAFermerSiCoffreOuvert.GetComponent<OpenGame>().canGameBeReplayed = false;
             var i = player.GetComponent<PlaySound>();
             i.Play(0);
             StartCoroutine(ResetCode());

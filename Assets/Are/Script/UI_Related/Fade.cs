@@ -50,7 +50,7 @@ public class Fade : MonoBehaviour
         while (elapsedTime < timeToFade)
         {
             yield return fadeInstruction;
-            elapsedTime += Time.deltaTime;
+            elapsedTime += Time.deltaTime * 2;
             c.a = Mathf.Clamp01(elapsedTime / timeToFade);
             image.color = c;
         }

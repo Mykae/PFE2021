@@ -34,15 +34,21 @@ public class ClockUI : MonoBehaviour
         day += Time.deltaTime / REAL_SECONDS_PER_INGAME_DAY;
 
         float hourNormalized = day % 1f;
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKey(KeyCode.M) && Input.GetKey(KeyCode.L))
         {
-            beforeFive = true;
+            day = .77f;
+            
         }
         if(hourNormalized >= 0.7082f && beforeFive)
         {
             beforeFive = false;
             if(shouldRing)
                 GetComponent<PlaySound>().Play(0);
+        }
+        if(day >= .75f)
+        {
+            FindObjectOfType<Fade>().TriggerFadeIn();
+            FindObjectOfType<MenuPause>().GoToEndingScreen();
         }
 
 
